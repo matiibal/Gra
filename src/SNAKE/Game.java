@@ -63,7 +63,7 @@ public class Game extends JPanel implements ActionListener {
         timer.start();
     }
 
-    int getGameTime() {
+    public  int getGameTime() {
         return gameTime;
     }
 
