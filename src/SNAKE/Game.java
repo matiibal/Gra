@@ -54,7 +54,7 @@ public class Game extends JPanel implements ActionListener {
     private int moves = 0;
 
 
-    public Game() {
+    Game() {
         setFocusable(false);
 
 
@@ -63,11 +63,11 @@ public class Game extends JPanel implements ActionListener {
         timer.start();
     }
 
-    public int getGameTime() {
+    int getGameTime() {
         return gameTime;
     }
 
-    public int getCountGame() {
+    int getCountGame() {
         return countGame;
     }
 
@@ -77,7 +77,7 @@ public class Game extends JPanel implements ActionListener {
 
     public void paint(Graphics obj) {
 
-int movsd;
+
         if (moves == 0) {
             snakeLenghtX[2] = 50;
             snakeLenghtX[1] = 75;
@@ -234,9 +234,8 @@ int movsd;
     public void actionPerformed(ActionEvent e) {
         timer.start();
         if (right) {
-            for (int r = lenghtDefaultSnake - 1; r >= 0; r--) {
-                snakeLenghtY[r + 1] = snakeLenghtY[r];
-            }
+            if (lenghtDefaultSnake - 1 + 1 >= 0)
+                System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
                 if (r == 0) {
                     snakeLenghtX[r] = snakeLenghtX[r] + 25;
@@ -252,9 +251,8 @@ int movsd;
             }
         }
         if (left) {
-            for (int r = lenghtDefaultSnake - 1; r >= 0; r--) {
-                snakeLenghtY[r + 1] = snakeLenghtY[r];
-            }
+            if (lenghtDefaultSnake - 1 + 1 >= 0)
+                System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
                 if (r == 0) {
                     snakeLenghtX[r] = snakeLenghtX[r] - 25;
@@ -270,9 +268,8 @@ int movsd;
             }
         }
         if (up) {
-            for (int r = lenghtDefaultSnake - 1; r >= 0; r--) {
-                snakeLenghtX[r + 1] = snakeLenghtX[r];
-            }
+            if (lenghtDefaultSnake - 1 + 1 >= 0)
+                System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
                 if (r == 0) {
                     snakeLenghtY[r] = snakeLenghtY[r] - 25;
@@ -290,9 +287,8 @@ int movsd;
 
 
         if (down) {
-            for (int r = lenghtDefaultSnake - 1; r >= 0; r--) {
-                snakeLenghtX[r + 1] = snakeLenghtX[r];
-            }
+            if (lenghtDefaultSnake - 1 + 1 >= 0)
+                System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
                 if (r == 0) {
                     snakeLenghtY[r] = snakeLenghtY[r] + 25;
@@ -310,12 +306,11 @@ int movsd;
     }
 
 
-    public void vkRight() {
+    void vkRight() {
 
         moves++;
         right = true;
         if (!left) {
-            right = true;
         } else {
             right = false;
             left = true;
@@ -324,7 +319,7 @@ int movsd;
         down = false;
     }
 
-    public void vkLeft() {
+    void vkLeft() {
 
         moves++;
         left = true;
@@ -338,7 +333,7 @@ int movsd;
         down = false;
     }
 
-    public void vkUp() {
+    void vkUp() {
 
         moves++;
         up = true;
@@ -352,7 +347,7 @@ int movsd;
         right = false;
     }
 
-    public void vkDown() {
+    void vkDown() {
 
         moves++;
         down = true;
@@ -368,7 +363,7 @@ int movsd;
 
     }
 
-    public void vkEnter() {
+    void vkEnter() {
         if (!timer.isRunning()) {
             moves = 0;
             score = 0;
