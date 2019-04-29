@@ -67,7 +67,7 @@ public class Game extends JPanel implements ActionListener {
         return gameTime;
     }
 
-    int getCountGame() {
+    public int getCountGame() {
         return countGame;
     }
 
