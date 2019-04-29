@@ -28,7 +28,7 @@ public class Game extends JPanel implements ActionListener {
     private int scoreApple, scoreBanana, scoreOrange;
 
 
-    boolean cointains(int[] tab, int element) {
+    public boolean cointains(int[] tab, int element) {
         for (int i = 1; i < tab.length; i++) {
             if (tab[i] == element) {
                 return true;
@@ -77,7 +77,7 @@ public class Game extends JPanel implements ActionListener {
 
     public void paint(Graphics obj) {
 
-
+int movsd;
         if (moves == 0) {
             snakeLenghtX[2] = 50;
             snakeLenghtX[1] = 75;
@@ -152,9 +152,7 @@ public class Game extends JPanel implements ActionListener {
         foodOrange.paintIcon(this, obj, 500, 25);
 
 
-        if (cointains(snakeLenghtY, foodYPosition[ypos]) && cointains(snakeLenghtX, foodXPosition[xpos])) {
-            // System.out.println("Zła pozycja");
-        }
+
 
 
         if (foodXPosition[xpos] == snakeLenghtX[0] && foodYPosition[ypos] == snakeLenghtY[0]) {
