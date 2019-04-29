@@ -54,7 +54,7 @@ public class Game extends JPanel implements ActionListener {
     private int moves = 0;
 
 
-    Game() {
+    public Game() {
         setFocusable(false);
 
 
