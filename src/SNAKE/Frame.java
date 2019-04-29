@@ -81,7 +81,7 @@ public class Frame extends JFrame {
 
             }
         });
-        setBounds(400, 100, 900, 900);
+        setBounds(400, 100, 900, 800);
 
         setTitle("Snake");
         setResizable(false);
