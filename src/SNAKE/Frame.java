@@ -17,7 +17,10 @@ public class Frame extends JFrame {
     static Timer timerGame;
     static int count = 0;
     static boolean statusGame=true;
-    private int movesSnake = 0;
+    private int flagGame=0;
+    private int extraTime=0;
+
+
 
     public int getCount() {
         return count;
@@ -25,6 +28,7 @@ public class Frame extends JFrame {
 
     public static void startTimer(int countPassed) {
         ActionListener action = new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 if (count == 0) {
                     statusGame=false;
@@ -32,6 +36,7 @@ public class Frame extends JFrame {
 
                 } else {
                     count--;
+
                     System.out.println(count + " sekund");
 
 
@@ -57,8 +62,8 @@ public class Frame extends JFrame {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-
                     game.vkRight();
+
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_LEFT) {
@@ -110,7 +115,9 @@ public class Frame extends JFrame {
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
                 count += 50;
-                startTimer(count);
+                flagGame = gameTime.getFlagGame();
+                    startTimer(count);
+
                 background.setVisible(false);
 
                 buttonOption.setVisible(false);
