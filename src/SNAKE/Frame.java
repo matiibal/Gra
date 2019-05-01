@@ -16,10 +16,10 @@ public class Frame extends JFrame {
     private static int delayGame = 10;
     static Timer timerGame;
     static int count = 0;
-    static boolean statusGame=true;
-    private int flagGame=0;
-    private int extraTime=0;
-
+    static boolean statusGame = true;
+    private int flagGame = 0;
+    private int extraTime = 0;
+    static int flagStop = 0;
 
 
     public int getCount() {
@@ -31,7 +31,7 @@ public class Frame extends JFrame {
 
             public void actionPerformed(ActionEvent e) {
                 if (count == 0) {
-                    statusGame=false;
+                    statusGame = false;
                     timerGame.stop();
 
                 } else {
@@ -86,6 +86,18 @@ public class Frame extends JFrame {
                     game.vkEnter();
 
                 }
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+                    game.vkSpace();
+                    if (flagStop == 0) {
+                        flagStop = 1;
+                    }
+                    else
+                    {
+                        flagStop=0;
+                    }
+
+                }
             }
 
             @Override
@@ -116,7 +128,7 @@ public class Frame extends JFrame {
                 count = gameTime.getGameTime();
                 count += 50;
                 flagGame = gameTime.getFlagGame();
-                    startTimer(count);
+                startTimer(count);
 
                 background.setVisible(false);
 

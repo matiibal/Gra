@@ -81,6 +81,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void paint(Graphics obj) {
+        repaint();
         countGame = Frame.count;
 
         if (moves == 0) {
@@ -160,14 +161,14 @@ public class Game extends JPanel implements ActionListener {
         if (foodXPosition[xpos] == snakeLenghtX[0] && foodYPosition[ypos] == snakeLenghtY[0]) {
 
             if (score % 15 == 0 && score != 0) {
-                score += 33;
-
+                score += 66;
+                Frame.count+=5;
                 scoreBanana++;
                 System.out.println("Banany= " + scoreBanana);
 
             } else if (score % 18 == 0 && score != 0) {
-                score += 66;
-                Frame.count+=5;
+                score += 33;
+                Frame.count+=3;
 
                 scoreOrange++;
                 System.out.println("Pomarancze= " + scoreOrange);
@@ -175,7 +176,7 @@ public class Game extends JPanel implements ActionListener {
 
             } else {
                 score += 3;
-
+                Frame.count+=1;
                 lenghtDefaultSnake++;
                 scoreApple++;
 
@@ -389,4 +390,18 @@ public class Game extends JPanel implements ActionListener {
         repaint();
 
     }
+
+    void vkSpace()
+    {
+        System.out.println("FLAG STOP"+Frame.flagStop);
+        if(Frame.flagStop==0) {
+            timer.stop();
+            Frame.timerGame.stop();
+        }
+        else
+        {
+            timer.restart();
+            Frame.timerGame.restart();
+        }
+        }
 }
