@@ -13,18 +13,23 @@ public class Frame extends JFrame {
     private ImageIcon startGame, option, bestScores;
     private JButton buttonStart, buttonOption, buttonBestScores;
     private Game game;
-    private int delayGame = 10;
-    private Timer timerGame;
-    private int count = 0;
+    private static int delayGame = 10;
+    public static Timer timerGame;
+    private static int count = 0;
+    public static boolean statusGame=true;
     private int movesSnake = 0;
 
+    public int getCount() {
+        return count;
+    }
 
-
-    public void startTimer(int countPassed) {
+    public static void startTimer(int countPassed) {
         ActionListener action = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (count == 0) {
-                    System.out.println("Ala ma kota");
+                    statusGame=false;
+                    timerGame.stop();
+
                 } else {
                     count--;
                     System.out.println(count + " sekund");
@@ -104,10 +109,6 @@ public class Frame extends JFrame {
                 count = gameTime.getGameTime();
                 count += 50;
                 startTimer(count);
-                int countGame = gameTime.getCountGame();
-                if (countGame == 0) {
-                    timerGame.stop();
-                }
                 background.setVisible(false);
 
                 buttonOption.setVisible(false);

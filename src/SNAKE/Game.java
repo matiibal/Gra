@@ -19,7 +19,7 @@ public class Game extends JPanel implements ActionListener {
     private int delay = 110;
     private int gameTime = 10;
     private int countGame = 10;
-
+    private int defaultCount = 60;
     private boolean left = false;
     private boolean right = false;
     private boolean up = false;
@@ -205,15 +205,16 @@ public class Game extends JPanel implements ActionListener {
         }
 
         for (int b = 1; b < lenghtDefaultSnake; b++) {
-            if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0]) {
+
+            if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0] || !Frame.statusGame) {
 
                 right = false;
                 left = false;
                 up = false;
                 down = false;
                 timer.stop();
-                countGame = 0;
 
+                Frame.timerGame.stop();
 
                 obj.setColor(Color.white);
                 obj.setFont(new Font("MyFont", Font.BOLD, 50));
@@ -365,6 +366,7 @@ public class Game extends JPanel implements ActionListener {
 
     void vkEnter() {
         if (!timer.isRunning()) {
+            Frame.statusGame=true;
             moves = 0;
             score = 0;
             scoreOrange = 0;
@@ -372,6 +374,9 @@ public class Game extends JPanel implements ActionListener {
             scoreApple = 0;
             lenghtDefaultSnake = 3;
             timer.start();
+
+            //Frame.timerGame.start();
+            Frame.startTimer(defaultCount);
         }
         repaint();
 
