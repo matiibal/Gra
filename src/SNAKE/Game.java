@@ -76,7 +76,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void paint(Graphics obj) {
-
+        countGame=Frame.count;
 
         if (moves == 0) {
             snakeLenghtX[2] = 50;
@@ -103,23 +103,23 @@ public class Game extends JPanel implements ActionListener {
 
         obj.setColor(Color.white);
         obj.setFont(new Font("Arial", Font.BOLD, 20));
-        obj.drawString("X " + scoreApple, 240, 45);
+        obj.drawString("X " + scoreApple, 350,45);
 
         obj.setColor(Color.white);
         obj.setFont(new Font("Arial", Font.BOLD, 20));
-        obj.drawString("X " + scoreBanana, 390, 45);
+        obj.drawString("X " + scoreBanana, 490, 45);
 
         obj.setColor(Color.white);
         obj.setFont(new Font("Arial", Font.BOLD, 20));
-        obj.drawString("X " + scoreOrange, 540, 45);
+        obj.drawString("X " + scoreOrange, 640, 45);
 
         obj.setColor(Color.white);
         obj.setFont(new Font("Arial", Font.BOLD, 20));
-        obj.drawString("SCORE: " + score, 700, 45);
+        obj.drawString("SCORE: " + score, 720, 45);
 
         obj.setColor(Color.white);
         obj.setFont(new Font("Arial", Font.BOLD, 20));
-        obj.drawString("SNAKE", 50, 45);
+        obj.drawString("Game over in: "+countGame+" seconds", 40, 45);
 
         rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
         rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
@@ -147,9 +147,9 @@ public class Game extends JPanel implements ActionListener {
         foodBanana = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\foodBanana.png");
         foodOrange = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\foodOrange.png");
 
-        foodApple.paintIcon(this, obj, 200, 25);
-        foodBanana.paintIcon(this, obj, 350, 25);
-        foodOrange.paintIcon(this, obj, 500, 25);
+        foodApple.paintIcon(this, obj, 310, 25);
+        foodBanana.paintIcon(this, obj, 450, 25);
+        foodOrange.paintIcon(this, obj, 600, 25);
 
 
 

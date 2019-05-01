@@ -14,9 +14,9 @@ public class Frame extends JFrame {
     private JButton buttonStart, buttonOption, buttonBestScores;
     private Game game;
     private static int delayGame = 10;
-    public static Timer timerGame;
-    private static int count = 0;
-    public static boolean statusGame=true;
+    static Timer timerGame;
+    static int count = 0;
+    static boolean statusGame=true;
     private int movesSnake = 0;
 
     public int getCount() {
@@ -33,6 +33,8 @@ public class Frame extends JFrame {
                 } else {
                     count--;
                     System.out.println(count + " sekund");
+
+
                 }
             }
 
