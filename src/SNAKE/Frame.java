@@ -37,7 +37,7 @@ public class Frame extends JFrame {
                 } else {
                     count--;
 
-                    System.out.println(count + " sekund");
+                   // System.out.println(count + " sekund");
 
 
                 }

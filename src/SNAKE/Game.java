@@ -8,13 +8,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game extends JPanel implements ActionListener {
     private int[] snakeLenghtX = new int[750];
     private int[] snakeLenghtY = new int[750];
     private ImageIcon rightHead, leftHead, upHead, downHead, body;
-
+    private ArrayList<Integer> resultList;
     private Timer timer;
     private int delay = 110;
     private int gameTime = 10;
@@ -162,21 +169,21 @@ public class Game extends JPanel implements ActionListener {
 
             if (score % 15 == 0 && score != 0) {
                 score += 66;
-                Frame.count+=5;
+                Frame.count += 5;
                 scoreBanana++;
-                System.out.println("Banany= " + scoreBanana);
+                //System.out.println("Banany= " + scoreBanana);
 
             } else if (score % 18 == 0 && score != 0) {
                 score += 33;
-                Frame.count+=3;
+                Frame.count += 3;
 
                 scoreOrange++;
-                System.out.println("Pomarancze= " + scoreOrange);
+                //System.out.println("Pomarancze= " + scoreOrange);
 
 
             } else {
                 score += 3;
-                Frame.count+=1;
+                Frame.count += 1;
                 lenghtDefaultSnake++;
                 scoreApple++;
 
@@ -215,6 +222,17 @@ public class Game extends JPanel implements ActionListener {
 
             if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0] || !Frame.statusGame) {
 
+                try {
+                    FileWriter zapis = new FileWriter("result.txt", true);
+                    zapis.append(score + "\r\n");
+                    System.lineSeparator();
+                    zapis.close();
+                } catch (IOException ex) {
+                    System.out.println("File errror");
+                }
+
+
+                Frame.flagStop = 0;
                 right = false;
                 left = false;
                 up = false;
@@ -223,24 +241,47 @@ public class Game extends JPanel implements ActionListener {
 
                 Frame.timerGame.stop();
 
-                obj.setColor(Color.white);
-                obj.setFont(new Font("MyFont", Font.BOLD, 50));
-                obj.drawString("GAME OVER", 300, 300);
+
+                /*try {
+                    FileWriter zapis = new FileWriter("result.txt", true);
+                    zapis.append(score + "\r\n");
+                    System.lineSeparator();
+                    zapis.close();
+                } catch (IOException ex) {
+                    System.out.println("File errror");
+                }
+
+
+                try {
+                    Scanner odczyt = new Scanner(Paths.get("result.txt"));
+                    while (odczyt.hasNextInt())
+                    {
+                        System.out.println(odczyt);
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+*/
 
                 obj.setColor(Color.white);
-                obj.setFont(new Font("MyFont", Font.BOLD, 20));
-                obj.drawString("Press ENTER to start again", 325, 350);
+                    obj.setFont(new Font("MyFont", Font.BOLD, 50));
+                    obj.drawString("GAME OVER", 300, 300);
+
+                    obj.setColor(Color.white);
+                    obj.setFont(new Font("MyFont", Font.BOLD, 20));
+                    obj.drawString("Press ENTER to start again", 325, 350);
+                }
             }
+            obj.dispose();
 
         }
-        obj.dispose();
-
-    }
 
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        timer.start();
+        @Override
+        public void actionPerformed (ActionEvent e){
+            timer.start();
 
             if (right) {
                 if (lenghtDefaultSnake - 1 + 1 >= 0)
@@ -260,148 +301,147 @@ public class Game extends JPanel implements ActionListener {
                 }
             }
 
-        if (left) {
-            if (lenghtDefaultSnake - 1 + 1 >= 0)
-                System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
-            for (int r = lenghtDefaultSnake; r >= 0; r--) {
-                if (r == 0) {
-                    snakeLenghtX[r] = snakeLenghtX[r] - 25;
+            if (left) {
+                if (lenghtDefaultSnake - 1 + 1 >= 0)
+                    System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
+                for (int r = lenghtDefaultSnake; r >= 0; r--) {
+                    if (r == 0) {
+                        snakeLenghtX[r] = snakeLenghtX[r] - 25;
 
-                } else {
-                    snakeLenghtX[r] = snakeLenghtX[r - 1];
-                }
-                if (snakeLenghtX[r] < 25) {
-                    snakeLenghtX[r] = 850;
-                }
+                    } else {
+                        snakeLenghtX[r] = snakeLenghtX[r - 1];
+                    }
+                    if (snakeLenghtX[r] < 25) {
+                        snakeLenghtX[r] = 850;
+                    }
 
-                repaint();
+                    repaint();
+                }
+            }
+            if (up) {
+                if (lenghtDefaultSnake - 1 + 1 >= 0)
+                    System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
+                for (int r = lenghtDefaultSnake; r >= 0; r--) {
+                    if (r == 0) {
+                        snakeLenghtY[r] = snakeLenghtY[r] - 25;
+
+                    } else {
+                        snakeLenghtY[r] = snakeLenghtY[r - 1];
+                    }
+                    if (snakeLenghtY[r] < 75) {
+                        snakeLenghtY[r] = 700;
+                    }
+
+                    repaint();
+                }
+            }
+
+
+            if (down) {
+                if (lenghtDefaultSnake - 1 + 1 >= 0)
+                    System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
+                for (int r = lenghtDefaultSnake; r >= 0; r--) {
+                    if (r == 0) {
+                        snakeLenghtY[r] = snakeLenghtY[r] + 25;
+
+                    } else {
+                        snakeLenghtY[r] = snakeLenghtY[r - 1];
+                    }
+                    if (snakeLenghtY[r] > 700) {
+                        snakeLenghtY[r] = 75;
+                    }
+
+                    repaint();
+                }
             }
         }
-        if (up) {
-            if (lenghtDefaultSnake - 1 + 1 >= 0)
-                System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
-            for (int r = lenghtDefaultSnake; r >= 0; r--) {
-                if (r == 0) {
-                    snakeLenghtY[r] = snakeLenghtY[r] - 25;
-
-                } else {
-                    snakeLenghtY[r] = snakeLenghtY[r - 1];
-                }
-                if (snakeLenghtY[r] < 75) {
-                    snakeLenghtY[r] = 700;
-                }
-
-                repaint();
-            }
-        }
 
 
-        if (down) {
-            if (lenghtDefaultSnake - 1 + 1 >= 0)
-                System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
-            for (int r = lenghtDefaultSnake; r >= 0; r--) {
-                if (r == 0) {
-                    snakeLenghtY[r] = snakeLenghtY[r] + 25;
+        void vkRight () {
 
-                } else {
-                    snakeLenghtY[r] = snakeLenghtY[r - 1];
-                }
-                if (snakeLenghtY[r] > 700) {
-                    snakeLenghtY[r] = 75;
-                }
-
-                repaint();
-            }
-        }
-    }
-
-
-    void vkRight() {
-
-        moves++;
-        right = true;
-        if (!left) {
-        } else {
-            right = false;
-            left = true;
-        }
-        up = false;
-        down = false;
-    }
-
-    void vkLeft() {
-        if (moves > 0) {
             moves++;
-            left = true;
-            if (!right) {
-                left = true;
+            right = true;
+            if (!left) {
             } else {
-                left = false;
-                right = true;
+                right = false;
+                left = true;
             }
             up = false;
             down = false;
         }
-    }
-    void vkUp() {
 
-        moves++;
-        up = true;
-        if (!down) {
+        void vkLeft () {
+            if (moves > 0) {
+                moves++;
+                left = true;
+                if (!right) {
+                    left = true;
+                } else {
+                    left = false;
+                    right = true;
+                }
+                up = false;
+                down = false;
+            }
+        }
+
+        void vkUp () {
+
+            moves++;
             up = true;
-        } else {
-            up = false;
+            if (!down) {
+                up = true;
+            } else {
+                up = false;
+                down = true;
+            }
+            left = false;
+            right = false;
+        }
+
+        void vkDown () {
+
+            moves++;
             down = true;
+            if (!up) {
+                down = true;
+            } else {
+
+                up = true;
+                down = false;
+            }
+            left = false;
+            right = false;
+
         }
-        left = false;
-        right = false;
+
+        void vkEnter () {
+            if (!timer.isRunning() && Frame.flagStop == 0) {
+                Frame.statusGame = true;
+                moves = 0;
+                score = 0;
+                scoreOrange = 0;
+                scoreBanana = 0;
+                scoreApple = 0;
+                lenghtDefaultSnake = 3;
+                timer.start();
+
+                //Frame.timerGame.start();
+                Frame.startTimer(defaultCount);
+            }
+            repaint();
+
+        }
+
+        void vkSpace () {
+            // System.out.println("FLAG STOP" + Frame.flagStop);
+            if (Frame.flagStop == 0) {
+                timer.stop();
+                Frame.timerGame.stop();
+
+            } else {
+                timer.restart();
+                Frame.timerGame.restart();
+            }
+        }
     }
-
-    void vkDown() {
-
-        moves++;
-        down = true;
-        if (!up) {
-            down = true;
-        } else {
-
-            up = true;
-            down = false;
-        }
-        left = false;
-        right = false;
-
-    }
-
-    void vkEnter() {
-        if (!timer.isRunning()) {
-            Frame.statusGame = true;
-            moves = 0;
-            score = 0;
-            scoreOrange = 0;
-            scoreBanana = 0;
-            scoreApple = 0;
-            lenghtDefaultSnake = 3;
-            timer.start();
-
-            //Frame.timerGame.start();
-            Frame.startTimer(defaultCount);
-        }
-        repaint();
-
-    }
-
-    void vkSpace()
-    {
-        System.out.println("FLAG STOP"+Frame.flagStop);
-        if(Frame.flagStop==0) {
-            timer.stop();
-            Frame.timerGame.stop();
-        }
-        else
-        {
-            timer.restart();
-            Frame.timerGame.restart();
-        }
-        }
-}
