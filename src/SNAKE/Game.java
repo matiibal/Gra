@@ -220,6 +220,7 @@ public class Game extends JPanel implements ActionListener {
 
         for (int b = 1; b < lenghtDefaultSnake; b++) {
 
+            int z;
             if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0] || !Frame.statusGame) {
 
                 try {
