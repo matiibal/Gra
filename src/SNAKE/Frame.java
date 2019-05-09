@@ -250,12 +250,7 @@ public class Frame extends JFrame {
 
                 setBackground(Color.GRAY);
 
-               JTextField wynikiGry = new JTextField("   5 NAJLEPSZYCH WYNIKÓW GRY: " );
-                wynikiGry.setFont(new Font("czcionka", Font.BOLD, 30));
-                wynikiGry.setForeground(Color.black);
-                wynikiGry.setEditable(false);
-                wynikiGry.setBounds(370, 50, 500, 120);
-                add(wynikiGry);
+
 
                /* wynikiGry1 = new JTextField("1. WYNIK:  " + tablica_wynikow[0]);
                 wynikiGry1.setFont(new Font("czcionka", Font.BOLD, 15));
@@ -294,17 +289,17 @@ public class Frame extends JFrame {
                 wynikiGry5.setBounds(370, 250, 500, 20);
                 add(wynikiGry5);
 
-
+*/
 
                 setLayout(new BorderLayout());
-                background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\Quiz_\\src\\bestresult.jpg"));
+                background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\Scores.png"));
 
                 add(background);
 
 
                 background.setLayout(new FlowLayout());
 
-                */
+
 
             }
         });
