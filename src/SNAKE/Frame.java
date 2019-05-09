@@ -18,8 +18,8 @@ import java.util.Scanner;
 
 public class Frame extends JFrame {
     private JLabel background;
-    private ImageIcon startGame, option, bestScores;
-    private JButton buttonStart, buttonOption, buttonBestScores;
+    private ImageIcon startGame, option, bestScores, backMenu;
+    private JButton buttonStart, buttonOption, buttonBestScores, buttonBackMenu;
     private Game game;
     private static int delayGame = 10;
     static Timer timerGame;
@@ -27,10 +27,11 @@ public class Frame extends JFrame {
     static boolean statusGame = true;
     private int flagGame = 0;
     private int extraTime = 0;
-    private boolean buttonStartPressed=false;
+    private boolean buttonStartPressed = false;
     static int flagStop = 0;
     private ArrayList<Integer> result;
     private int[] table_result;
+    private JLabel result1, result2, result3, result4, result5, result6, result7, result8, result9, result10; //najlepsze wyniki
 
     public int getCount() {
         return count;
@@ -47,7 +48,7 @@ public class Frame extends JFrame {
                 } else {
                     count--;
 
-                   // System.out.println(count + " sekund");
+                    // System.out.println(count + " sekund");
 
 
                 }
@@ -101,30 +102,27 @@ public class Frame extends JFrame {
                     game.vkSpace();
                     if (flagStop == 0) {
                         flagStop = 1;
-                    }
-                    else
-                    {
-                        flagStop=0;
+                    } else {
+                        flagStop = 0;
                     }
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
 
-                        game.vkEsc();
-                        if(game.isFlagBacground()) {
-                            buttonStart.setVisible(true);
-                            buttonBestScores.setVisible(true);
-                            buttonOption.setVisible(true);
-                            setLayout(new BorderLayout());
-                             background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\game.jpg"));
-                             add(background);
-                             background.setVisible(true);
-                             background.setLayout(new FlowLayout());
-                             game.setFlagBacground(false);
-                        }
-                    if(buttonStartPressed)
-                    {
-                        setBackground(new Color(48,171,60));
+                    game.vkEsc();
+                    if (game.isFlagBacground()) {
+                        buttonStart.setVisible(true);
+                        buttonBestScores.setVisible(true);
+                        buttonOption.setVisible(true);
+                        setLayout(new BorderLayout());
+                        background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\game.jpg"));
+                        add(background);
+                        background.setVisible(true);
+                        background.setLayout(new FlowLayout());
+                        game.setFlagBacground(false);
+                    }
+                    if (buttonStartPressed) {
+                        setBackground(new Color(48, 171, 60));
                     }
 
 
@@ -161,13 +159,13 @@ public class Frame extends JFrame {
                 buttonOption.setVisible(false);
                 buttonBestScores.setVisible(false);
                 buttonStart.setVisible(false);
-                setBackground(new Color(48,172,60));
+                setBackground(new Color(48, 172, 60));
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
                 count += 50;
                 flagGame = gameTime.getFlagGame();
                 startTimer(count);
-                buttonStartPressed=true;
+                buttonStartPressed = true;
 
 
                 game.setVisible(true);
@@ -216,8 +214,7 @@ public class Frame extends JFrame {
 
                     Scanner odczyt = new Scanner(Paths.get("result.txt"));
                     result = new ArrayList();
-                    for(int i = 0 ; i< 10; i++)
-                    {
+                    for (int i = 0; i < 10; i++) {
                         result.add(0);
                     }
 
@@ -236,60 +233,109 @@ public class Frame extends JFrame {
                     e1.printStackTrace();
                 }
 
-                table_result = new int[10] ;
+                table_result = new int[10];
 
-                for(int i=0 ; i< table_result.length; i++)
-
-                {
-                    table_result[i]= result.get(i);
+                for (int i = 0; i < table_result.length; i++) {
+                    table_result[i] = result.get(i);
                 }
-                for(int el : table_result)
-                {
+                for (int el : table_result) {
                     System.out.println(el);
                 }
 
                 setBackground(Color.GRAY);
 
 
+                result1 = new JLabel(String.valueOf(table_result[0]));
+                result1.setFont(new Font("czcionka", Font.BOLD, 22));
+                result1.setForeground(Color.black);
+                result1.setBounds(163, 158, 500, 20);
+                add(result1);
+                result2 = new JLabel(String.valueOf(table_result[1]));
+                result2.setFont(new Font("czcionka", Font.BOLD, 22));
+                result2.setForeground(Color.black);
+                result2.setBounds(273, 158, 500, 20);
+                add(result2);
+                result3 = new JLabel(String.valueOf(table_result[2]));
+                result3.setFont(new Font("czcionka", Font.BOLD, 22));
+                result3.setForeground(Color.black);
+                result3.setBounds(383, 158, 500, 20);
+                add(result3);
+                result4 = new JLabel(String.valueOf(table_result[3]));
+                result4.setFont(new Font("czcionka", Font.BOLD, 22));
+                result4.setForeground(Color.black);
+                result4.setBounds(493, 158, 500, 20);
+                add(result4);
+                result5 = new JLabel(String.valueOf(table_result[4]));
+                result5.setFont(new Font("czcionka", Font.BOLD, 22));
+                result5.setForeground(Color.black);
+                result5.setBounds(603, 158, 500, 20);
+                add(result5);
+                result6 = new JLabel(String.valueOf(table_result[5]));
+                result6.setFont(new Font("czcionka", Font.BOLD, 22));
+                result6.setForeground(Color.black);
+                result6.setBounds(603, 268, 500, 20);
+                add(result6);
+                result7 = new JLabel(String.valueOf(table_result[6]));
+                result7.setFont(new Font("czcionka", Font.BOLD, 22));
+                result7.setForeground(Color.black);
+                result7.setBounds(603, 368, 500, 20);
+                add(result7);
+                result8 = new JLabel(String.valueOf(table_result[7]));
+                result8.setFont(new Font("czcionka", Font.BOLD, 22));
+                result8.setForeground(Color.black);
+                result8.setBounds(603, 478, 500, 20);
+                add(result8);
+                result9 = new JLabel(String.valueOf(table_result[8]));
+                result9.setFont(new Font("czcionka", Font.BOLD, 22));
+                result9.setForeground(Color.black);
+                result9.setBounds(713, 478, 500, 20);
+                add(result9);
+                result10 = new JLabel(String.valueOf(table_result[9]));
+                result10.setFont(new Font("czcionka", Font.BOLD, 22));
+                result10.setForeground(Color.black);
+                result10.setBounds(818, 478, 500, 20);
+                add(result10);
 
-               /* wynikiGry1 = new JTextField("1. WYNIK:  " + tablica_wynikow[0]);
-                wynikiGry1.setFont(new Font("czcionka", Font.BOLD, 15));
-                wynikiGry1.setForeground(Color.black);
-                wynikiGry1.setEditable(false);
-                wynikiGry1.setBounds(370, 170, 500, 20);
-                add(wynikiGry1);
+                backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
+                buttonBackMenu = new JButton();
+                buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
+                buttonBackMenu.setBounds(10,690,115,43);
+                add(buttonBackMenu);
+                buttonBackMenu.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        background.setVisible(false);
+                        buttonBackMenu.setVisible(false);
+                        result1.setVisible(false);
+                        result2.setVisible(false);
+                        result3.setVisible(false);
+                        result4.setVisible(false);
+                        result5.setVisible(false);
+                        result6.setVisible(false);
+                        result7.setVisible(false);
+                        result8.setVisible(false);
+                        result9.setVisible(false);
+                        result10.setVisible(false);
 
-                wynikiGry2 = new JTextField("2. WYNIK:  " + tablica_wynikow[1]);
-                wynikiGry2.setFont(new Font("czcionka", Font.BOLD, 15));
-                wynikiGry2.setForeground(Color.black);
-                wynikiGry2.setEditable(false);
-                wynikiGry2.setBounds(370, 190, 500, 20);
-                add(wynikiGry2);
+                        buttonStart.setVisible(true);
+                        buttonBestScores.setVisible(true);
+                        buttonOption.setVisible(true);
+                        setLayout(new BorderLayout());
+                        background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\game.jpg"));
+                        add(background);
+                        background.setVisible(true);
+                        background.setLayout(new FlowLayout());
+                        game.setFlagBacground(false);
 
-                wynikiGry3 = new JTextField("3. WYNIK:  " + tablica_wynikow[2]);
-                wynikiGry3.setFont(new Font("czcionka", Font.BOLD, 15));
-                wynikiGry3.setForeground(Color.black);
-                wynikiGry3.setEditable(false);
-                wynikiGry3.setBounds(370, 210, 500, 20);
-                add(wynikiGry3);
+                        if (buttonStartPressed) {
+                            setBackground(new Color(48, 171, 60));
+                        }
 
-
-                wynikiGry4 = new JTextField("4. WYNIK:  " + tablica_wynikow[3]);
-                wynikiGry4.setFont(new Font("czcionka", Font.BOLD, 15));
-                wynikiGry4.setForeground(Color.black);
-                wynikiGry4.setEditable(false);
-                wynikiGry4.setBounds(370, 230, 500, 20);
-                add(wynikiGry4);
+                    }
+                });
 
 
-                wynikiGry5 = new JTextField("5. WYNIK:  " + tablica_wynikow[4]);
-                wynikiGry5.setFont(new Font("czcionka", Font.BOLD, 15));
-                wynikiGry5.setForeground(Color.black);
-                wynikiGry5.setEditable(false);
-                wynikiGry5.setBounds(370, 250, 500, 20);
-                add(wynikiGry5);
 
-*/
 
                 setLayout(new BorderLayout());
                 background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\Scores.png"));
@@ -298,7 +344,6 @@ public class Frame extends JFrame {
 
 
                 background.setLayout(new FlowLayout());
-
 
 
             }
