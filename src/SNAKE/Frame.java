@@ -1,5 +1,8 @@
 package SNAKE;
 
+import com.sun.org.apache.bcel.internal.generic.FADD;
+import com.sun.org.apache.xpath.internal.functions.FuncFalse;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -7,6 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 
 public class Frame extends JFrame {
     private JLabel background;
@@ -19,8 +27,10 @@ public class Frame extends JFrame {
     static boolean statusGame = true;
     private int flagGame = 0;
     private int extraTime = 0;
+    private boolean buttonStartPressed=false;
     static int flagStop = 0;
-
+    private ArrayList<Integer> result;
+    private int[] table_result;
 
     public int getCount() {
         return count;
@@ -98,10 +108,32 @@ public class Frame extends JFrame {
                     }
 
                 }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+
+                        game.vkEsc();
+                        if(game.isFlagBacground()) {
+                            buttonStart.setVisible(true);
+                            buttonBestScores.setVisible(true);
+                            buttonOption.setVisible(true);
+                            setLayout(new BorderLayout());
+                             background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\game.jpg"));
+                             add(background);
+                             background.setVisible(true);
+                             background.setLayout(new FlowLayout());
+                             game.setFlagBacground(false);
+                        }
+                    if(buttonStartPressed)
+                    {
+                        setBackground(new Color(48,171,60));
+                    }
+
+
+                }
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
+
 
             }
         });
@@ -124,22 +156,23 @@ public class Frame extends JFrame {
         buttonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                background.setVisible(false);
+                buttonOption.setVisible(false);
+                buttonBestScores.setVisible(false);
+                buttonStart.setVisible(false);
+                setBackground(new Color(48,172,60));
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
                 count += 50;
                 flagGame = gameTime.getFlagGame();
                 startTimer(count);
+                buttonStartPressed=true;
 
-                background.setVisible(false);
-
-                buttonOption.setVisible(false);
-                buttonBestScores.setVisible(false);
-                buttonStart.setVisible(false);
-                setBackground(Color.GRAY);
 
                 game.setVisible(true);
-
                 add(game);
+
             }
         });
 
@@ -178,7 +211,100 @@ public class Frame extends JFrame {
                 buttonOption.setVisible(false);
                 buttonBestScores.setVisible(false);
                 buttonStart.setVisible(false);
+
+                try {
+
+                    Scanner odczyt = new Scanner(Paths.get("result.txt"));
+                    result = new ArrayList();
+                    for(int i = 0 ; i< 10; i++)
+                    {
+                        result.add(0);
+                    }
+
+
+                    while (odczyt.hasNext()) {
+
+                        int zmienna = odczyt.nextInt();
+
+                        result.add(zmienna);
+                        Collections.sort(result);
+                        Collections.reverse(result);
+
+                    }
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+
+                table_result = new int[10] ;
+
+                for(int i=0 ; i< table_result.length; i++)
+
+                {
+                    table_result[i]= result.get(i);
+                }
+                for(int el : table_result)
+                {
+                    System.out.println(el);
+                }
+
                 setBackground(Color.GRAY);
+
+               JTextField wynikiGry = new JTextField("   5 NAJLEPSZYCH WYNIKÓW GRY: " );
+                wynikiGry.setFont(new Font("czcionka", Font.BOLD, 30));
+                wynikiGry.setForeground(Color.black);
+                wynikiGry.setEditable(false);
+                wynikiGry.setBounds(370, 50, 500, 120);
+                add(wynikiGry);
+
+               /* wynikiGry1 = new JTextField("1. WYNIK:  " + tablica_wynikow[0]);
+                wynikiGry1.setFont(new Font("czcionka", Font.BOLD, 15));
+                wynikiGry1.setForeground(Color.black);
+                wynikiGry1.setEditable(false);
+                wynikiGry1.setBounds(370, 170, 500, 20);
+                add(wynikiGry1);
+
+                wynikiGry2 = new JTextField("2. WYNIK:  " + tablica_wynikow[1]);
+                wynikiGry2.setFont(new Font("czcionka", Font.BOLD, 15));
+                wynikiGry2.setForeground(Color.black);
+                wynikiGry2.setEditable(false);
+                wynikiGry2.setBounds(370, 190, 500, 20);
+                add(wynikiGry2);
+
+                wynikiGry3 = new JTextField("3. WYNIK:  " + tablica_wynikow[2]);
+                wynikiGry3.setFont(new Font("czcionka", Font.BOLD, 15));
+                wynikiGry3.setForeground(Color.black);
+                wynikiGry3.setEditable(false);
+                wynikiGry3.setBounds(370, 210, 500, 20);
+                add(wynikiGry3);
+
+
+                wynikiGry4 = new JTextField("4. WYNIK:  " + tablica_wynikow[3]);
+                wynikiGry4.setFont(new Font("czcionka", Font.BOLD, 15));
+                wynikiGry4.setForeground(Color.black);
+                wynikiGry4.setEditable(false);
+                wynikiGry4.setBounds(370, 230, 500, 20);
+                add(wynikiGry4);
+
+
+                wynikiGry5 = new JTextField("5. WYNIK:  " + tablica_wynikow[4]);
+                wynikiGry5.setFont(new Font("czcionka", Font.BOLD, 15));
+                wynikiGry5.setForeground(Color.black);
+                wynikiGry5.setEditable(false);
+                wynikiGry5.setBounds(370, 250, 500, 20);
+                add(wynikiGry5);
+
+
+
+                setLayout(new BorderLayout());
+                background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\Quiz_\\src\\bestresult.jpg"));
+
+                add(background);
+
+
+                background.setLayout(new FlowLayout());
+
+                */
 
             }
         });
