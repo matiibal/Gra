@@ -25,6 +25,7 @@ public class Game extends JPanel implements ActionListener {
     private boolean down = false;
     private int lenghtDefaultSnake = 3;
     private int scoreApple, scoreBanana, scoreOrange;
+    private boolean pressRight = false, pressLeft = false, pressUp = false, pressDown = false;
 
     public boolean isGameMode() {
         return gameMode;
@@ -152,6 +153,7 @@ public class Game extends JPanel implements ActionListener {
 
         for (int i = 0; i < lenghtDefaultSnake; i++) {
             if (i == 0 && right) {
+                moves++;
                 rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
                 rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
             } else if (i == 0 && left) {
@@ -184,15 +186,13 @@ public class Game extends JPanel implements ActionListener {
 
                 if (gameMode) {
                     Frame.count += 5;
-                    score+=66;
-                    if(scoreOrange%20==0 && scoreOrange !=0)
-                    {
-                        score+=660;
-                        Frame.count+=30;
+                    score += 66;
+                    if (scoreOrange % 20 == 0 && scoreOrange != 0) {
+                        score += 660;
+                        Frame.count += 30;
                     }
                 }
-                if(!gameMode)
-                {
+                if (!gameMode) {
                     score += 66;
                 }
                 scoreBanana++;
@@ -202,15 +202,12 @@ public class Game extends JPanel implements ActionListener {
 
                 if (gameMode) {
                     Frame.count += 3;
-                    score+=33;
-                    if(scoreBanana%20==0 && scoreBanana !=0)
-                    {
-                        score+=330;
-                        Frame.count+= 30;
+                    score += 33;
+                    if (scoreBanana % 20 == 0 && scoreBanana != 0) {
+                        score += 330;
+                        Frame.count += 30;
                     }
-                }
-                else if(!gameMode)
-                {
+                } else if (!gameMode) {
                     score += 33;
                 }
                 scoreOrange++;
@@ -222,15 +219,12 @@ public class Game extends JPanel implements ActionListener {
                 if (gameMode) {
                     Frame.count += 1;
                     score += 3;
-                    if(scoreApple%20==0 && scoreApple!=0)
-                    {
-                        score+=150;
-                        Frame.count+=15;
+                    if (scoreApple % 20 == 0 && scoreApple != 0) {
+                        score += 150;
+                        Frame.count += 15;
                     }
-                }
-               else if (!gameMode)
-                {
-                    score+=3;
+                } else if (!gameMode) {
+                    score += 3;
                 }
                 lenghtDefaultSnake++;
                 scoreApple++;
@@ -317,12 +311,12 @@ public class Game extends JPanel implements ActionListener {
                 if (snakeLenghtX[r] > 850) {
                     snakeLenghtX[r] = 25;
                 }
-
+                pressRight = false;
                 repaint();
             }
         }
 
-        if (left) {
+       else if (left) {
             if (lenghtDefaultSnake - 1 + 1 >= 0)
                 System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
@@ -335,11 +329,12 @@ public class Game extends JPanel implements ActionListener {
                 if (snakeLenghtX[r] < 25) {
                     snakeLenghtX[r] = 850;
                 }
-
+                pressLeft = false;
                 repaint();
             }
         }
-        if (up) {
+        else if (up) {
+
             if (lenghtDefaultSnake - 1 + 1 >= 0)
                 System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
@@ -352,13 +347,12 @@ public class Game extends JPanel implements ActionListener {
                 if (snakeLenghtY[r] < 75) {
                     snakeLenghtY[r] = 700;
                 }
-
                 repaint();
             }
         }
 
 
-        if (down) {
+        else if (down) {
             if (lenghtDefaultSnake - 1 + 1 >= 0)
                 System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
             for (int r = lenghtDefaultSnake; r >= 0; r--) {
@@ -371,7 +365,6 @@ public class Game extends JPanel implements ActionListener {
                 if (snakeLenghtY[r] > 700) {
                     snakeLenghtY[r] = 75;
                 }
-
                 repaint();
             }
         }
@@ -381,59 +374,58 @@ public class Game extends JPanel implements ActionListener {
     void vkRight() {
 
         moves++;
-        right = true;
+        pressRight = true;
         if (!left) {
-        } else {
-            right = false;
-            left = true;
+            right = true;
+            up = false;
+            down = false;
+            left=false;
         }
-        up = false;
-        down = false;
     }
 
     void vkLeft() {
+        pressLeft = true;
         if (moves > 0) {
             moves++;
-            left = true;
+
             if (!right) {
                 left = true;
-            } else {
-                left = false;
-                right = true;
+                up = false;
+                down = false;
+                right=false;
             }
-            up = false;
-            down = false;
+
         }
+
     }
+
 
     void vkUp() {
+        pressUp=true;
+        if (moves > 0) {
 
-        moves++;
-        up = true;
-        if (!down) {
-            up = true;
-        } else {
-            up = false;
-            down = true;
+                moves++;
+                if (!down) {
+                    up = true;
+                    left = false;
+                    right = false;
+                    down=false;
+                }
+            }
         }
-        left = false;
-        right = false;
-    }
+
 
     void vkDown() {
-
-        moves++;
-        down = true;
-        if (!up) {
-            down = true;
-        } else {
-
-            up = true;
-            down = false;
+        pressDown=true;
+        if (moves > 0) {
+            moves++;
+            if (!up) {
+                down = true;
+                up=false;
+                left = false;
+                right = false;
+            }
         }
-        left = false;
-        right = false;
-
     }
 
     void vkEnter() {
@@ -469,15 +461,15 @@ public class Game extends JPanel implements ActionListener {
         // System.out.println("FLAG STOP" + Frame.flagStop);
         if (Frame.flagStop == 0) {
             timer.stop();
-         if(gameMode) {
-             Frame.timerGame.stop();
-         }
+            if (gameMode) {
+                Frame.timerGame.stop();
+            }
         } else {
             timer.restart();
-          if(gameMode) {
-              Frame.timerGame.restart();
-          }
-          }
+            if (gameMode) {
+                Frame.timerGame.restart();
+            }
+        }
     }
 
     void vkEsc() {

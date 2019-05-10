@@ -68,7 +68,7 @@ public class Frame extends JFrame implements ActionListener{
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
                     game.vkRight();
 
 
@@ -187,6 +187,7 @@ public class Frame extends JFrame implements ActionListener{
                 buttonOption.setVisible(false);
                 buttonBestScores.setVisible(false);
                 buttonStart.setVisible(false);
+
                 setBackground(Color.GRAY);
 
 
