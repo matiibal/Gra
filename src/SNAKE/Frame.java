@@ -1,9 +1,5 @@
 package SNAKE;
 
-import com.sun.org.apache.bcel.internal.generic.FADD;
-import com.sun.org.apache.xpath.internal.functions.FuncFalse;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Frame extends JFrame {
+public class Frame extends JFrame implements ActionListener{
     private JLabel background;
     private ImageIcon startGame, option, bestScores, backMenu;
     private JButton buttonStart, buttonOption, buttonBestScores, buttonBackMenu;
@@ -162,9 +158,11 @@ public class Frame extends JFrame {
                 setBackground(new Color(48, 172, 60));
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
-                count += 50;
                 flagGame = gameTime.getFlagGame();
-                startTimer(count);
+                if(game.isGameMode())
+                {
+                    startTimer(count);
+                }
                 buttonStartPressed = true;
 
 
@@ -231,6 +229,10 @@ public class Frame extends JFrame {
 
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                    result = new ArrayList();
+                    for (int i = 0; i < 10; i++) {
+                        result.add(0);
+                    }
                 }
 
                 table_result = new int[10];
@@ -258,7 +260,7 @@ public class Frame extends JFrame {
                 result3 = new JLabel(String.valueOf(table_result[2]));
                 result3.setFont(new Font("czcionka", Font.BOLD, 22));
                 result3.setForeground(Color.black);
-                result3.setBounds(383, 158, 500, 20);
+                result3.setBounds(378 , 158, 500, 20);
                 add(result3);
                 result4 = new JLabel(String.valueOf(table_result[3]));
                 result4.setFont(new Font("czcionka", Font.BOLD, 22));
@@ -301,9 +303,10 @@ public class Frame extends JFrame {
                 buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
                 buttonBackMenu.setBounds(10,690,115,43);
                 add(buttonBackMenu);
+                buttonBackMenu.setFocusable(false);
                 buttonBackMenu.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e) {
+
                         background.setVisible(false);
                         buttonBackMenu.setVisible(false);
                         result1.setVisible(false);
@@ -359,6 +362,10 @@ public class Frame extends JFrame {
     }
 
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
 }
 
 
