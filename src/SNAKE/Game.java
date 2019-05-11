@@ -26,6 +26,7 @@ public class Game extends JPanel implements ActionListener {
     private int lenghtDefaultSnake = 3;
     private int scoreApple, scoreBanana, scoreOrange;
     private boolean pressRight = false, pressLeft = false, pressUp = false, pressDown = false;
+    private int appearanceFlag = 2;
 
     public boolean isGameMode() {
         return gameMode;
@@ -148,29 +149,93 @@ public class Game extends JPanel implements ActionListener {
             obj.setFont(new Font("Arial", Font.BOLD, 20));
             obj.drawString("SNAKE FREE MODE ", 40, 45);
         }
-        rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
-        rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
 
-        for (int i = 0; i < lenghtDefaultSnake; i++) {
-            if (i == 0 && right) {
-                moves++;
-                rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
-                rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
-            } else if (i == 0 && left) {
-                leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left.png");
-                leftHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
-            } else if (i == 0 && up) {
-                upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up.png");
-                upHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
-            } else if (i == 0 && down) {
-                downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down.png");
-                downHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
-            } else if (i != 0) {
-                body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body.png");
-                body.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+            rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
+            rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
+
+        if(appearanceFlag==1) {
+
+            rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
+            rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
+
+            for (int i = 0; i < lenghtDefaultSnake; i++) {
+                if (i == 0 && right) {
+                    moves++;
+                    rightHead = new ImageIcon();
+                    rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i == 0 && left) {
+                    leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left.png");
+                    leftHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i == 0 && up) {
+                    upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up.png");
+                    upHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i == 0 && down) {
+                    downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down.png");
+                    downHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i != 0) {
+                    body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body.png");
+                    body.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                }
+
+            }
+        }
+else if(appearanceFlag==2)
+        {
+            rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right2.png");
+            rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
+            for (int i = 0; i < lenghtDefaultSnake; i++) {
+                if (i == 0 && right) {
+                    moves++;
+                    rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right2.png");
+                    rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i == 0 && left) {
+                    leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left2.png");
+                    leftHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i == 0 && up) {
+                    upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up2.png");
+                    upHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i == 0 && down) {
+                    downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down2.png");
+                    downHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                } else if (i != 0) {
+                    body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body2.png");
+                    body.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                }
+
             }
 
         }
+      else  if(appearanceFlag==3)
+        {
+            {
+                rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right3.png");
+                rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
+
+                for (int i = 0; i < lenghtDefaultSnake; i++) {
+                    if (i == 0 && right) {
+                        moves++;
+                        rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right3.png");
+                        rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                    } else if (i == 0 && left) {
+                        leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left3.png");
+                        leftHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                    } else if (i == 0 && up) {
+                        upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up3.png");
+                        upHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                    } else if (i == 0 && down) {
+                        downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down3.png");
+                        downHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                    } else if (i != 0) {
+                        body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body3.png");
+                        body.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
+                    }
+
+                }
+            }
+        }
+
+
+
         foodApple = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\food.png");
         foodBanana = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\foodBanana.png");
         foodOrange = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\foodOrange.png");

@@ -2,10 +2,7 @@ package SNAKE;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -14,8 +11,12 @@ import java.util.Scanner;
 
 public class Frame extends JFrame implements ActionListener{
     private JLabel background;
-    private ImageIcon startGame, option, bestScores, backMenu;
-    private JButton buttonStart, buttonOption, buttonBestScores, buttonBackMenu;
+    private ButtonGroup groupLevel, groupMode, groupAppearance;
+    private JRadioButton levelEasy, levelMedium, levelHard;
+    private JRadioButton freeMode, timeMode;
+    private JRadioButton look1, look2, look3;
+    private ImageIcon startGame, option, bestScores, backMenu, saveSetting ;
+    private JButton buttonStart, buttonOption, buttonBestScores, buttonBackMenu, buttonSaveSettings;
     private Game game;
     private static int delayGame = 10;
     static Timer timerGame;
@@ -188,7 +189,172 @@ public class Frame extends JFrame implements ActionListener{
                 buttonBestScores.setVisible(false);
                 buttonStart.setVisible(false);
 
-                setBackground(Color.GRAY);
+
+               JLabel level = new JLabel("LEVEL: ");
+               level.setBounds(50,300,150,50);
+                level.setForeground(new Color(181,230,29));
+                level.setFont(new Font("Arial", Font.BOLD, 30));
+
+               add(level);
+
+               groupLevel = new ButtonGroup();
+               levelEasy = new JRadioButton("EASY");
+               levelMedium = new JRadioButton("MEDIUM");
+               levelHard = new JRadioButton("HARD");
+
+               groupLevel.add(levelEasy);
+               groupLevel.add(levelMedium);
+               groupLevel.add(levelHard);
+
+               levelEasy.setBounds(180,300,110,50);
+                levelEasy.setForeground(Color.white);
+                levelEasy.setFont(new Font("Arial", Font.BOLD, 25));
+                levelEasy.setBackground(new Color(34,177,76));
+                levelEasy.setFocusable(false);
+               levelMedium.setBounds(290,300,130,50);
+                levelMedium.setForeground(Color.white);
+                levelMedium.setFont(new Font("Arial", Font.BOLD, 25));
+                levelMedium.setBackground(new Color(34,177,76));
+                levelMedium.setFocusable(false);
+               levelHard.setBounds(440,300,110,50);
+                levelHard.setForeground(Color.white);
+                levelHard.setFont(new Font("Arial", Font.BOLD, 25));
+                levelHard.setBackground(new Color(34,177,76));
+                levelHard.setFocusable(false);
+                add(levelEasy);
+
+               add(levelHard);
+               add(levelMedium);
+
+
+                JLabel mode = new JLabel("MODE: ");
+                mode.setBounds(50,360,150,50);
+                mode.setForeground(new Color(181,230,29));
+                mode.setFont(new Font("Arial", Font.BOLD, 30));
+
+                add(mode);
+
+                groupMode = new ButtonGroup();
+                freeMode = new JRadioButton("FREE MODE");
+                timeMode = new JRadioButton("TIME MODE");
+
+
+                groupMode.add(freeMode);
+                groupMode.add(timeMode);
+
+                freeMode.setBounds(180,360,180,50);
+                freeMode.setForeground(Color.white);
+                freeMode.setFont(new Font("Arial", Font.BOLD, 25));
+                freeMode.setBackground(new Color(34,177,76));
+                freeMode.setFocusable(false);
+                timeMode.setBounds(360,360,180,50);
+                timeMode.setForeground(Color.white);
+                timeMode.setFont(new Font("Arial", Font.BOLD, 25));
+                timeMode.setBackground(new Color(34,177,76));
+                timeMode.setFocusable(false);
+                add(freeMode);
+                add(timeMode);
+
+
+                JLabel appearance = new JLabel("APPEARANCE: ");
+               appearance.setBounds(140,420,250,50);
+               appearance.setForeground(new Color(181,230,29));
+                appearance.setFont(new Font("Arial", Font.BOLD, 30));
+                add(appearance);
+
+                groupAppearance = new ButtonGroup();
+
+                look1 = new JRadioButton("1");
+                look2 = new JRadioButton("2");
+                look3 = new JRadioButton("3");
+
+                groupAppearance.add(look1);
+                groupAppearance.add(look2);
+                groupAppearance.add(look3);
+
+                look1.setBounds(90,630,110,20);
+                look1.setForeground(Color.white);
+                look1.setFont(new Font("Arial", Font.BOLD, 25));
+                look1.setBackground(new Color(34,177,76));
+                look1.setFocusable(false);
+                look2.setBounds(230,630,130,20);
+                look2.setForeground(Color.white);
+                look2.setFont(new Font("Arial", Font.BOLD, 25));
+                look2.setBackground(new Color(34,177,76));
+                look2.setFocusable(false);
+                look3.setBounds(370,630,110,20);
+                look3.setForeground(Color.white);
+                look3.setFont(new Font("Arial", Font.BOLD, 25));
+                look3.setBackground(new Color(34,177,76));
+                look3.setFocusable(false);
+                add(look1);
+                add(look2);
+                add(look3);
+                saveSetting = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\saveSettings.png");
+                buttonSaveSettings = new JButton();
+                buttonSaveSettings.setIcon(new ImageIcon(String.valueOf(saveSetting)));
+                buttonSaveSettings.setBounds(280,690,115,43);
+
+                add( buttonSaveSettings);
+                buttonSaveSettings.setFocusable(false);
+                buttonSaveSettings.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.out.println("Zapisane dane");
+
+                    }
+                });
+
+
+                backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
+                buttonBackMenu = new JButton();
+                buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
+                buttonBackMenu.setBounds(130,690,115,43);
+                add(buttonBackMenu);
+                buttonBackMenu.setFocusable(false);
+                buttonBackMenu.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+
+                        background.setVisible(false);
+                        buttonBackMenu.setVisible(false);
+                        look1.setVisible(false);
+                        look2.setVisible(false);
+                        look3.setVisible(false);
+                       timeMode.setVisible(false);
+                       freeMode.setVisible(false);
+                        levelEasy.setVisible(false);
+                        levelHard.setVisible(false);
+                        levelMedium.setVisible(false);
+                        appearance.setVisible(false);
+                        mode.setVisible(false);
+                        level.setVisible(false);
+                        buttonSaveSettings.setVisible(false);
+
+                        buttonStart.setVisible(true);
+                        buttonBestScores.setVisible(true);
+                        buttonOption.setVisible(true);
+                        setLayout(new BorderLayout());
+                        background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\game.jpg"));
+                        add(background);
+                        background.setVisible(true);
+                        background.setLayout(new FlowLayout());
+                        game.setFlagBacground(false);
+
+                        if (buttonStartPressed) {
+                            setBackground(new Color(48, 171, 60));
+                        }
+
+                    }
+                });
+
+
+
+
+                setLayout(new BorderLayout());
+                background = new JLabel(new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\gameOption.jpg"));
+                add(background);
+                background.setVisible(true);
+                background.setLayout(new FlowLayout());
 
 
             }
