@@ -3,6 +3,8 @@ package SNAKE;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FilePermission;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.Scanner;
 
 public class Frame extends JFrame implements ActionListener{
     private JLabel background;
+    private ArrayList<Integer> settingFile;
+    private ArrayList<Integer> saveFile;
     private ButtonGroup groupLevel, groupMode, groupAppearance;
     private JRadioButton levelEasy, levelMedium, levelHard;
     private JRadioButton freeMode, timeMode;
@@ -29,6 +33,9 @@ public class Frame extends JFrame implements ActionListener{
     private ArrayList<Integer> result;
     private int[] table_result;
     private JLabel result1, result2, result3, result4, result5, result6, result7, result8, result9, result10; //najlepsze wyniki
+    private int apperanceFlag=2;
+    private int modeFlag=1;
+    private int levelFlag=1;
 
     public int getCount() {
         return count;
@@ -160,7 +167,7 @@ public class Frame extends JFrame implements ActionListener{
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
                 flagGame = gameTime.getFlagGame();
-                if(game.isGameMode())
+                if(game.isGameMode()==1)
                 {
                     startTimer(count);
                 }
@@ -183,6 +190,48 @@ public class Frame extends JFrame implements ActionListener{
         buttonOption.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
+                try {
+
+                    Scanner setting = new Scanner(Paths.get("setting.txt"));
+                    settingFile = new ArrayList();
+
+                    while (setting.hasNext()) {
+
+                        int option = setting.nextInt();
+                        settingFile.add(option);
+
+                    }
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+
+                }
+                System.out.println(settingFile);
+
+
+
+           /*   try {
+                    FileWriter saveSettings = new FileWriter("setting.txt");
+                  modeFlag = settingFile.get(1);
+                  apperanceFlag = settingFile.get(2);
+                  levelFlag = settingFile.get(0);
+
+                   // saveSettings.append(modeFlag + "\r\n");
+                   // saveSettings.append(apperanceFlag + "\r\n");
+
+                    System.lineSeparator();
+                    saveSettings.close();
+                } catch (IOException ex) {
+                    System.out.println("File errror");
+                }
+*/
+
+
+
+
+
                 background.setVisible(false);
 
                 buttonOption.setVisible(false);
@@ -198,13 +247,16 @@ public class Frame extends JFrame implements ActionListener{
                add(level);
 
                groupLevel = new ButtonGroup();
-               levelEasy = new JRadioButton("EASY");
-               levelMedium = new JRadioButton("MEDIUM");
-               levelHard = new JRadioButton("HARD");
+               levelEasy = new JRadioButton("EASY",true);
+               levelMedium = new JRadioButton("MEDIUM",false);
+               levelHard = new JRadioButton("HARD", false);
 
                groupLevel.add(levelEasy);
                groupLevel.add(levelMedium);
                groupLevel.add(levelHard);
+
+
+
 
                levelEasy.setBounds(180,300,110,50);
                 levelEasy.setForeground(Color.white);
@@ -226,6 +278,19 @@ public class Frame extends JFrame implements ActionListener{
                add(levelHard);
                add(levelMedium);
 
+                if(levelFlag==1)
+                {
+                    levelEasy.setSelected(true);
+                }
+
+               else  if(levelFlag==2)
+                {
+                   levelMedium.setSelected(true);
+                }
+                else  if(levelFlag==3)
+                {
+                    levelHard.setSelected(true);
+                }
 
                 JLabel mode = new JLabel("MODE: ");
                 mode.setBounds(50,360,150,50);
@@ -235,8 +300,8 @@ public class Frame extends JFrame implements ActionListener{
                 add(mode);
 
                 groupMode = new ButtonGroup();
-                freeMode = new JRadioButton("FREE MODE");
-                timeMode = new JRadioButton("TIME MODE");
+                freeMode = new JRadioButton("FREE MODE", true);
+                timeMode = new JRadioButton("TIME MODE", false);
 
 
                 groupMode.add(freeMode);
@@ -255,7 +320,15 @@ public class Frame extends JFrame implements ActionListener{
                 add(freeMode);
                 add(timeMode);
 
+                if(modeFlag==1)
+                {
+                    freeMode.setSelected(true);
+                }
+                if(modeFlag==2)
+                {
+                    timeMode.setSelected(true);
 
+                }
                 JLabel appearance = new JLabel("APPEARANCE: ");
                appearance.setBounds(140,420,250,50);
                appearance.setForeground(new Color(181,230,29));
@@ -264,9 +337,9 @@ public class Frame extends JFrame implements ActionListener{
 
                 groupAppearance = new ButtonGroup();
 
-                look1 = new JRadioButton("1");
-                look2 = new JRadioButton("2");
-                look3 = new JRadioButton("3");
+                look1 = new JRadioButton("1", false);
+                look2 = new JRadioButton("2", true);
+                look3 = new JRadioButton("3", false);
 
                 groupAppearance.add(look1);
                 groupAppearance.add(look2);
@@ -290,6 +363,23 @@ public class Frame extends JFrame implements ActionListener{
                 add(look1);
                 add(look2);
                 add(look3);
+
+                if(apperanceFlag==1)
+                {
+                    look1.setSelected(true);
+                }
+
+                if(apperanceFlag==2)
+                {
+                    look2.setSelected(true);
+                }
+                if(apperanceFlag==3)
+                {
+                    look3.setSelected(true);
+                }
+
+
+
                 saveSetting = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\saveSettings.png");
                 buttonSaveSettings = new JButton();
                 buttonSaveSettings.setIcon(new ImageIcon(String.valueOf(saveSetting)));
@@ -301,7 +391,45 @@ public class Frame extends JFrame implements ActionListener{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Zapisane dane");
+                        saveFile=new ArrayList<>();
+                        if(levelEasy.isSelected())
+                        {
+                            saveFile.add(1);
+                        }
+                        if(levelMedium.isSelected())
+                        {
+                            saveFile.add(2);
+                        }
+                        if(levelHard.isSelected())
+                        {
+                            saveFile.add(3);
+                        }
+                        if(freeMode.isSelected())
+                        {
+                         saveFile.add(1);
+                        }
+                        else if(timeMode.isSelected())
+                        {
+                            saveFile.add(2);
+                        }
 
+                        if(look1.isSelected())
+                        {
+                            saveFile.add(1);
+                        }
+
+                        if(look2.isSelected())
+                        {
+                            saveFile.add(2);
+                        }
+
+                        if(look3.isSelected())
+                        {
+                            saveFile.add(3);
+                        }
+
+
+                        System.out.println(saveFile);
                     }
                 });
 

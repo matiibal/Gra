@@ -28,11 +28,11 @@ public class Game extends JPanel implements ActionListener {
     private boolean pressRight = false, pressLeft = false, pressUp = false, pressDown = false;
     private int appearanceFlag = 2;
 
-    public boolean isGameMode() {
+    public int  isGameMode() {
         return gameMode;
     }
 
-    private boolean gameMode = true;
+    private int gameMode = 1;
 
     public boolean isFlagBacground() {
         return flagBacground;
@@ -140,11 +140,11 @@ public class Game extends JPanel implements ActionListener {
         obj.setFont(new Font("Arial", Font.BOLD, 20));
         obj.drawString("SCORE: " + score, 720, 45);
         //jesli tryb czasowy
-        if (gameMode) {
+        if (gameMode==1) {
             obj.setColor(Color.white);
             obj.setFont(new Font("Arial", Font.BOLD, 20));
             obj.drawString("Game over in: " + countGame + " seconds", 40, 45);
-        } else if (!gameMode) { //jesli tryb czasowy
+        } else if (gameMode!=1) { //jesli tryb czasowy
             obj.setColor(Color.white);
             obj.setFont(new Font("Arial", Font.BOLD, 20));
             obj.drawString("SNAKE FREE MODE ", 40, 45);
@@ -249,7 +249,7 @@ else if(appearanceFlag==2)
 
             if (score % 15 == 0 && score != 0) {
 
-                if (gameMode) {
+                if (gameMode==1) {
                     Frame.count += 5;
                     score += 66;
                     if (scoreOrange % 20 == 0 && scoreOrange != 0) {
@@ -257,7 +257,7 @@ else if(appearanceFlag==2)
                         Frame.count += 30;
                     }
                 }
-                if (!gameMode) {
+                if (gameMode!=1) {
                     score += 66;
                 }
                 scoreBanana++;
@@ -265,14 +265,14 @@ else if(appearanceFlag==2)
 
             } else if (score % 18 == 0 && score != 0) {
 
-                if (gameMode) {
+                if (gameMode==1) {
                     Frame.count += 3;
                     score += 33;
                     if (scoreBanana % 20 == 0 && scoreBanana != 0) {
                         score += 330;
                         Frame.count += 30;
                     }
-                } else if (!gameMode) {
+                } else if (gameMode!=1) {
                     score += 33;
                 }
                 scoreOrange++;
@@ -281,14 +281,14 @@ else if(appearanceFlag==2)
 
             } else {
 
-                if (gameMode) {
+                if (gameMode==1) {
                     Frame.count += 1;
                     score += 3;
                     if (scoreApple % 20 == 0 && scoreApple != 0) {
                         score += 150;
                         Frame.count += 15;
                     }
-                } else if (!gameMode) {
+                } else if (gameMode!=1) {
                     score += 3;
                 }
                 lenghtDefaultSnake++;
@@ -338,7 +338,7 @@ else if(appearanceFlag==2)
                 down = false;
                 timer.stop();
 
-                if (gameMode) {
+                if (gameMode==1) {
                     Frame.timerGame.stop();
                 }
 
@@ -514,7 +514,7 @@ else if(appearanceFlag==2)
             timer.start();
 
             //Frame.timerGame.start();
-            if (gameMode) {
+            if (gameMode==1) {
                 Frame.startTimer(defaultCount);
             }
         }
@@ -526,12 +526,12 @@ else if(appearanceFlag==2)
         // System.out.println("FLAG STOP" + Frame.flagStop);
         if (Frame.flagStop == 0) {
             timer.stop();
-            if (gameMode) {
+            if (gameMode==1) {
                 Frame.timerGame.stop();
             }
         } else {
             timer.restart();
-            if (gameMode) {
+            if (gameMode==1) {
                 Frame.timerGame.restart();
             }
         }
