@@ -33,9 +33,12 @@ public class Frame extends JFrame implements ActionListener{
     private ArrayList<Integer> result;
     private int[] table_result;
     private JLabel result1, result2, result3, result4, result5, result6, result7, result8, result9, result10; //najlepsze wyniki
-    private int apperanceFlag=2;
-    private int modeFlag=1;
-    private int levelFlag=1;
+    public static int apperanceFlag=1;
+    public static int modeFlag=1;
+    public static int levelFlag=1;
+
+
+
 
     public int getCount() {
         return count;
@@ -158,7 +161,7 @@ public class Frame extends JFrame implements ActionListener{
         buttonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                repaint();
                 background.setVisible(false);
                 buttonOption.setVisible(false);
                 buttonBestScores.setVisible(false);
@@ -167,9 +170,47 @@ public class Frame extends JFrame implements ActionListener{
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
                 flagGame = gameTime.getFlagGame();
-                if(game.isGameMode()==1)
+
+
+                try {
+
+                    Scanner setting = new Scanner(Paths.get("setting.txt"));
+                    settingFile = new ArrayList();
+
+                    while (setting.hasNext()) {
+
+                        int option = setting.nextInt();
+                        settingFile.add(option);
+
+                    }
+
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    settingFile.add(1);
+                    settingFile.add(1);
+                    settingFile.add(1);
+
+                }
+                System.out.println(settingFile);
+
+
+                modeFlag = settingFile.get(1);
+                apperanceFlag = settingFile.get(2);
+                levelFlag = settingFile.get(0);
+
+                if(modeFlag==2)
                 {
-                    startTimer(count);
+                    if(levelFlag==1) {
+                        startTimer(count+30);
+                    }
+                    else if(levelFlag==2)
+                    {
+                        startTimer(count+15);
+                    }
+                    else if(levelFlag==3)
+                    {
+                        startTimer(count);
+                    }
                 }
                 buttonStartPressed = true;
 
@@ -206,27 +247,19 @@ public class Frame extends JFrame implements ActionListener{
 
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                    settingFile.add(1);
+                    settingFile.add(1);
+                    settingFile.add(1);
 
                 }
                 System.out.println(settingFile);
 
 
+                modeFlag = settingFile.get(1);
+                apperanceFlag = settingFile.get(2);
+                levelFlag = settingFile.get(0);
 
-           /*   try {
-                    FileWriter saveSettings = new FileWriter("setting.txt");
-                  modeFlag = settingFile.get(1);
-                  apperanceFlag = settingFile.get(2);
-                  levelFlag = settingFile.get(0);
 
-                   // saveSettings.append(modeFlag + "\r\n");
-                   // saveSettings.append(apperanceFlag + "\r\n");
-
-                    System.lineSeparator();
-                    saveSettings.close();
-                } catch (IOException ex) {
-                    System.out.println("File errror");
-                }
-*/
 
 
 
@@ -429,7 +462,34 @@ public class Frame extends JFrame implements ActionListener{
                         }
 
 
+
+
+
                         System.out.println(saveFile);
+
+
+
+                        modeFlag = saveFile.get(1);
+                        apperanceFlag = saveFile.get(2);
+                        levelFlag = saveFile.get(0);
+
+
+
+                        try {
+                            FileWriter saveSettings = new FileWriter("setting.txt");
+
+                            saveSettings.append(levelFlag + "\r\n");
+                            saveSettings.append(modeFlag + "\r\n");
+                            saveSettings.append(apperanceFlag + "\r\n");
+                            System.lineSeparator();
+
+
+
+                            saveSettings.close();
+                        } catch (IOException ex) {
+                            System.out.println("File errror");
+                        }
+
                     }
                 });
 

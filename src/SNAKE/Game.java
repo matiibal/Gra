@@ -15,7 +15,7 @@ public class Game extends JPanel implements ActionListener {
     private ImageIcon rightHead, leftHead, upHead, downHead, body;
     private ArrayList<Integer> resultList;
     private Timer timer;
-    private int delay = 100;
+    private int delay = 90;
     private int gameTime = 30;
     private int countGame = 10;
     private int defaultCount = 30;
@@ -26,13 +26,14 @@ public class Game extends JPanel implements ActionListener {
     private int lenghtDefaultSnake = 3;
     private int scoreApple, scoreBanana, scoreOrange;
     private boolean pressRight = false, pressLeft = false, pressUp = false, pressDown = false;
-    private int appearanceFlag = 2;
+    private int appearanceFlag = 1;
+    private int levelFlag = 1;
 
     public int  isGameMode() {
         return gameMode;
     }
 
-    private int gameMode = 1;
+    private int gameMode = 2;
 
     public boolean isFlagBacground() {
         return flagBacground;
@@ -77,7 +78,6 @@ public class Game extends JPanel implements ActionListener {
 
     public Game() {
         setFocusable(false);
-
         setBackground(new Color(48, 172, 60));
         setFocusTraversalKeysEnabled(false);
         timer = new Timer(delay, this);
@@ -100,11 +100,20 @@ public class Game extends JPanel implements ActionListener {
     public void paint(Graphics obj) {
         repaint();
         countGame = Frame.count;
+        gameMode=Frame.modeFlag;
+        levelFlag = Frame.levelFlag;
+
+
 
         if (moves == 0) {
-            snakeLenghtX[2] = 50;
-            snakeLenghtX[1] = 75;
-            snakeLenghtX[0] = 100;
+
+            if(levelFlag==2 && gameMode==2) score=261;
+            if(levelFlag==3 && gameMode==2) score=621;
+
+                snakeLenghtX[2] = 50;
+                snakeLenghtX[1] = 75;
+                snakeLenghtX[0] = 100;
+
 
 
             snakeLenghtY[2] = 100;
@@ -139,12 +148,15 @@ public class Game extends JPanel implements ActionListener {
         obj.setColor(Color.white);
         obj.setFont(new Font("Arial", Font.BOLD, 20));
         obj.drawString("SCORE: " + score, 720, 45);
+
+
+
         //jesli tryb czasowy
-        if (gameMode==1) {
+        if (gameMode==2) {
             obj.setColor(Color.white);
             obj.setFont(new Font("Arial", Font.BOLD, 20));
             obj.drawString("Game over in: " + countGame + " seconds", 40, 45);
-        } else if (gameMode!=1) { //jesli tryb czasowy
+        } else if (gameMode==1) { //jesli tryb czasowy
             obj.setColor(Color.white);
             obj.setFont(new Font("Arial", Font.BOLD, 20));
             obj.drawString("SNAKE FREE MODE ", 40, 45);
@@ -152,6 +164,8 @@ public class Game extends JPanel implements ActionListener {
 
             rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
             rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
+
+            appearanceFlag = Frame.apperanceFlag;
 
         if(appearanceFlag==1) {
 
@@ -249,7 +263,7 @@ else if(appearanceFlag==2)
 
             if (score % 15 == 0 && score != 0) {
 
-                if (gameMode==1) {
+                if (gameMode==2) {
                     Frame.count += 5;
                     score += 66;
                     if (scoreOrange % 20 == 0 && scoreOrange != 0) {
@@ -257,7 +271,7 @@ else if(appearanceFlag==2)
                         Frame.count += 30;
                     }
                 }
-                if (gameMode!=1) {
+               else if (gameMode==1) {
                     score += 66;
                 }
                 scoreBanana++;
@@ -265,14 +279,14 @@ else if(appearanceFlag==2)
 
             } else if (score % 18 == 0 && score != 0) {
 
-                if (gameMode==1) {
+                if (gameMode==2) {
                     Frame.count += 3;
                     score += 33;
                     if (scoreBanana % 20 == 0 && scoreBanana != 0) {
                         score += 330;
                         Frame.count += 30;
                     }
-                } else if (gameMode!=1) {
+                } else if (gameMode==1) {
                     score += 33;
                 }
                 scoreOrange++;
@@ -281,14 +295,14 @@ else if(appearanceFlag==2)
 
             } else {
 
-                if (gameMode==1) {
+                if (gameMode==2) {
                     Frame.count += 1;
                     score += 3;
                     if (scoreApple % 20 == 0 && scoreApple != 0) {
                         score += 150;
                         Frame.count += 15;
                     }
-                } else if (gameMode!=1) {
+                } else if (gameMode==1) {
                     score += 3;
                 }
                 lenghtDefaultSnake++;
@@ -338,7 +352,7 @@ else if(appearanceFlag==2)
                 down = false;
                 timer.stop();
 
-                if (gameMode==1) {
+                if (gameMode==2) {
                     Frame.timerGame.stop();
                 }
 
@@ -511,12 +525,27 @@ else if(appearanceFlag==2)
             scoreBanana = 0;
             scoreApple = 0;
             lenghtDefaultSnake = 3;
+
+
+
             timer.start();
 
             //Frame.timerGame.start();
-            if (gameMode==1) {
-                Frame.startTimer(defaultCount);
-            }
+            if (gameMode==2) {
+                if(levelFlag==1) {
+                    Frame.startTimer(defaultCount+30);
+                }
+                else if(levelFlag==2)
+                {
+                    Frame.startTimer(defaultCount+15);
+
+                }
+                else if(levelFlag==3)
+                {
+                    Frame.startTimer(defaultCount);
+
+                }
+                }
         }
         repaint();
 
@@ -526,12 +555,12 @@ else if(appearanceFlag==2)
         // System.out.println("FLAG STOP" + Frame.flagStop);
         if (Frame.flagStop == 0) {
             timer.stop();
-            if (gameMode==1) {
+            if (gameMode==2) {
                 Frame.timerGame.stop();
             }
         } else {
             timer.restart();
-            if (gameMode==1) {
+            if (gameMode==2) {
                 Frame.timerGame.restart();
             }
         }
