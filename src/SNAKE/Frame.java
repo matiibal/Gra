@@ -71,7 +71,7 @@ public class Frame extends JFrame implements ActionListener {
     public Frame() {
         game = new Game();
         timerKey = new Timer(10, this);
-        addKeyListener(new KeyListener() {
+        addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -79,39 +79,41 @@ public class Frame extends JFrame implements ActionListener {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+                int keyCode = e.getKeyCode();
+                if (keyCode == KeyEvent.VK_RIGHT ) {
+
                      game.vkRight();
 
 
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT ){
+               else if (keyCode == KeyEvent.VK_LEFT ){
 
                     game.vkLeft();
 
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_UP ){
+                else if (keyCode == KeyEvent.VK_UP ){
 
                         game.vkUp();
 
 
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_DOWN ) {
+                else if (keyCode == KeyEvent.VK_DOWN ) {
 
                         game.vkDown();
 
 
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                else if (keyCode == KeyEvent.VK_ENTER) {
 
                     game.vkEnter();
 
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+               else if (keyCode == KeyEvent.VK_SPACE) {
 
                     game.vkSpace();
                     if (flagStop == 0) {
@@ -121,7 +123,7 @@ public class Frame extends JFrame implements ActionListener {
                     }
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+              else  if (keyCode == KeyEvent.VK_ESCAPE) {
 
                     game.vkEsc();
                     if (game.isFlagBacground()) {
@@ -589,37 +591,37 @@ public class Frame extends JFrame implements ActionListener {
                 result4 = new JLabel(String.valueOf(table_result[3]));
                 result4.setFont(new Font("czcionka", Font.BOLD, 22));
                 result4.setForeground(Color.black);
-                result4.setBounds(493, 158, 500, 20);
+                result4.setBounds(483, 158, 500, 20);
                 add(result4);
                 result5 = new JLabel(String.valueOf(table_result[4]));
                 result5.setFont(new Font("czcionka", Font.BOLD, 22));
                 result5.setForeground(Color.black);
-                result5.setBounds(603, 158, 500, 20);
+                result5.setBounds(593, 158, 500, 20);
                 add(result5);
                 result6 = new JLabel(String.valueOf(table_result[5]));
                 result6.setFont(new Font("czcionka", Font.BOLD, 22));
                 result6.setForeground(Color.black);
-                result6.setBounds(603, 268, 500, 20);
+                result6.setBounds(593, 268, 500, 20);
                 add(result6);
                 result7 = new JLabel(String.valueOf(table_result[6]));
                 result7.setFont(new Font("czcionka", Font.BOLD, 22));
                 result7.setForeground(Color.black);
-                result7.setBounds(603, 368, 500, 20);
+                result7.setBounds(593, 368, 500, 20);
                 add(result7);
                 result8 = new JLabel(String.valueOf(table_result[7]));
                 result8.setFont(new Font("czcionka", Font.BOLD, 22));
                 result8.setForeground(Color.black);
-                result8.setBounds(603, 478, 500, 20);
+                result8.setBounds(593, 478, 500, 20);
                 add(result8);
                 result9 = new JLabel(String.valueOf(table_result[8]));
                 result9.setFont(new Font("czcionka", Font.BOLD, 22));
                 result9.setForeground(Color.black);
-                result9.setBounds(713, 478, 500, 20);
+                result9.setBounds(703, 478, 500, 20);
                 add(result9);
                 result10 = new JLabel(String.valueOf(table_result[9]));
                 result10.setFont(new Font("czcionka", Font.BOLD, 22));
                 result10.setForeground(Color.black);
-                result10.setBounds(818, 478, 500, 20);
+                result10.setBounds(808, 478, 500, 20);
                 add(result10);
 
                 backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
