@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Frame extends JFrame implements ActionListener{
+public class Frame extends JFrame implements ActionListener {
     private JLabel background;
     private ArrayList<Integer> settingFile;
     private ArrayList<Integer> saveFile;
@@ -19,11 +19,11 @@ public class Frame extends JFrame implements ActionListener{
     private JRadioButton levelEasy, levelMedium, levelHard;
     private JRadioButton freeMode, timeMode;
     private JRadioButton look1, look2, look3;
-    private ImageIcon startGame, option, bestScores, backMenu, saveSetting ;
+    private ImageIcon startGame, option, bestScores, backMenu, saveSetting;
     private JButton buttonStart, buttonOption, buttonBestScores, buttonBackMenu, buttonSaveSettings;
     private Game game;
     private static int delayGame = 10;
-    static Timer timerGame;
+    static Timer timerGame, timerKey;
     static int count = 0;
     static boolean statusGame = true;
     private int flagGame = 0;
@@ -33,11 +33,10 @@ public class Frame extends JFrame implements ActionListener{
     private ArrayList<Integer> result;
     private int[] table_result;
     private JLabel result1, result2, result3, result4, result5, result6, result7, result8, result9, result10; //najlepsze wyniki
-    public static int apperanceFlag=1;
-    public static int modeFlag=1;
-    public static int levelFlag=1;
-
-
+    public static int apperanceFlag = 1;
+    public static int modeFlag = 1;
+    public static int levelFlag = 1;
+    private boolean keyFlag = true;
 
 
     public int getCount() {
@@ -71,6 +70,7 @@ public class Frame extends JFrame implements ActionListener{
 
     public Frame() {
         game = new Game();
+        timerKey = new Timer(10, this);
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -80,28 +80,35 @@ public class Frame extends JFrame implements ActionListener{
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
-                    game.vkRight();
+                     game.vkRight();
+
 
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                if (e.getKeyCode() == KeyEvent.VK_LEFT ){
 
                     game.vkLeft();
 
-                }
-                if (e.getKeyCode() == KeyEvent.VK_UP) {
-
-                    game.vkUp();
 
                 }
-                if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                if (e.getKeyCode() == KeyEvent.VK_UP ){
 
-                    game.vkDown();
+                        game.vkUp();
+
+
+
+                }
+                if (e.getKeyCode() == KeyEvent.VK_DOWN ) {
+
+                        game.vkDown();
+
+
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
                     game.vkEnter();
+
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -138,6 +145,9 @@ public class Frame extends JFrame implements ActionListener{
 
             @Override
             public void keyReleased(KeyEvent e) {
+
+
+
 
 
             }
@@ -198,17 +208,12 @@ public class Frame extends JFrame implements ActionListener{
                 apperanceFlag = settingFile.get(2);
                 levelFlag = settingFile.get(0);
 
-                if(modeFlag==2)
-                {
-                    if(levelFlag==1) {
-                        startTimer(count+30);
-                    }
-                    else if(levelFlag==2)
-                    {
-                        startTimer(count+15);
-                    }
-                    else if(levelFlag==3)
-                    {
+                if (modeFlag == 2) {
+                    if (levelFlag == 1) {
+                        startTimer(count + 30);
+                    } else if (levelFlag == 2) {
+                        startTimer(count + 15);
+                    } else if (levelFlag == 3) {
                         startTimer(count);
                     }
                 }
@@ -260,11 +265,6 @@ public class Frame extends JFrame implements ActionListener{
                 levelFlag = settingFile.get(0);
 
 
-
-
-
-
-
                 background.setVisible(false);
 
                 buttonOption.setVisible(false);
@@ -272,62 +272,54 @@ public class Frame extends JFrame implements ActionListener{
                 buttonStart.setVisible(false);
 
 
-               JLabel level = new JLabel("LEVEL: ");
-               level.setBounds(50,300,150,50);
-                level.setForeground(new Color(181,230,29));
+                JLabel level = new JLabel("LEVEL: ");
+                level.setBounds(50, 300, 150, 50);
+                level.setForeground(new Color(181, 230, 29));
                 level.setFont(new Font("Arial", Font.BOLD, 30));
 
-               add(level);
+                add(level);
 
-               groupLevel = new ButtonGroup();
-               levelEasy = new JRadioButton("EASY",true);
-               levelMedium = new JRadioButton("MEDIUM",false);
-               levelHard = new JRadioButton("HARD", false);
+                groupLevel = new ButtonGroup();
+                levelEasy = new JRadioButton("EASY", true);
+                levelMedium = new JRadioButton("MEDIUM", false);
+                levelHard = new JRadioButton("HARD", false);
 
-               groupLevel.add(levelEasy);
-               groupLevel.add(levelMedium);
-               groupLevel.add(levelHard);
-
-
+                groupLevel.add(levelEasy);
+                groupLevel.add(levelMedium);
+                groupLevel.add(levelHard);
 
 
-               levelEasy.setBounds(180,300,110,50);
+                levelEasy.setBounds(180, 300, 110, 50);
                 levelEasy.setForeground(Color.white);
                 levelEasy.setFont(new Font("Arial", Font.BOLD, 25));
-                levelEasy.setBackground(new Color(34,177,76));
+                levelEasy.setBackground(new Color(34, 177, 76));
                 levelEasy.setFocusable(false);
-               levelMedium.setBounds(290,300,130,50);
+                levelMedium.setBounds(290, 300, 130, 50);
                 levelMedium.setForeground(Color.white);
                 levelMedium.setFont(new Font("Arial", Font.BOLD, 25));
-                levelMedium.setBackground(new Color(34,177,76));
+                levelMedium.setBackground(new Color(34, 177, 76));
                 levelMedium.setFocusable(false);
-               levelHard.setBounds(440,300,110,50);
+                levelHard.setBounds(440, 300, 110, 50);
                 levelHard.setForeground(Color.white);
                 levelHard.setFont(new Font("Arial", Font.BOLD, 25));
-                levelHard.setBackground(new Color(34,177,76));
+                levelHard.setBackground(new Color(34, 177, 76));
                 levelHard.setFocusable(false);
                 add(levelEasy);
 
-               add(levelHard);
-               add(levelMedium);
+                add(levelHard);
+                add(levelMedium);
 
-                if(levelFlag==1)
-                {
+                if (levelFlag == 1) {
                     levelEasy.setSelected(true);
-                }
-
-               else  if(levelFlag==2)
-                {
-                   levelMedium.setSelected(true);
-                }
-                else  if(levelFlag==3)
-                {
+                } else if (levelFlag == 2) {
+                    levelMedium.setSelected(true);
+                } else if (levelFlag == 3) {
                     levelHard.setSelected(true);
                 }
 
                 JLabel mode = new JLabel("MODE: ");
-                mode.setBounds(50,360,150,50);
-                mode.setForeground(new Color(181,230,29));
+                mode.setBounds(50, 360, 150, 50);
+                mode.setForeground(new Color(181, 230, 29));
                 mode.setFont(new Font("Arial", Font.BOLD, 30));
 
                 add(mode);
@@ -340,31 +332,29 @@ public class Frame extends JFrame implements ActionListener{
                 groupMode.add(freeMode);
                 groupMode.add(timeMode);
 
-                freeMode.setBounds(180,360,180,50);
+                freeMode.setBounds(180, 360, 180, 50);
                 freeMode.setForeground(Color.white);
                 freeMode.setFont(new Font("Arial", Font.BOLD, 25));
-                freeMode.setBackground(new Color(34,177,76));
+                freeMode.setBackground(new Color(34, 177, 76));
                 freeMode.setFocusable(false);
-                timeMode.setBounds(360,360,180,50);
+                timeMode.setBounds(360, 360, 180, 50);
                 timeMode.setForeground(Color.white);
                 timeMode.setFont(new Font("Arial", Font.BOLD, 25));
-                timeMode.setBackground(new Color(34,177,76));
+                timeMode.setBackground(new Color(34, 177, 76));
                 timeMode.setFocusable(false);
                 add(freeMode);
                 add(timeMode);
 
-                if(modeFlag==1)
-                {
+                if (modeFlag == 1) {
                     freeMode.setSelected(true);
                 }
-                if(modeFlag==2)
-                {
+                if (modeFlag == 2) {
                     timeMode.setSelected(true);
 
                 }
                 JLabel appearance = new JLabel("APPEARANCE: ");
-               appearance.setBounds(140,420,250,50);
-               appearance.setForeground(new Color(181,230,29));
+                appearance.setBounds(140, 420, 250, 50);
+                appearance.setForeground(new Color(181, 230, 29));
                 appearance.setFont(new Font("Arial", Font.BOLD, 30));
                 add(appearance);
 
@@ -378,101 +368,83 @@ public class Frame extends JFrame implements ActionListener{
                 groupAppearance.add(look2);
                 groupAppearance.add(look3);
 
-                look1.setBounds(90,630,110,20);
+                look1.setBounds(90, 630, 110, 20);
                 look1.setForeground(Color.white);
                 look1.setFont(new Font("Arial", Font.BOLD, 25));
-                look1.setBackground(new Color(34,177,76));
+                look1.setBackground(new Color(34, 177, 76));
                 look1.setFocusable(false);
-                look2.setBounds(230,630,130,20);
+                look2.setBounds(230, 630, 130, 20);
                 look2.setForeground(Color.white);
                 look2.setFont(new Font("Arial", Font.BOLD, 25));
-                look2.setBackground(new Color(34,177,76));
+                look2.setBackground(new Color(34, 177, 76));
                 look2.setFocusable(false);
-                look3.setBounds(370,630,110,20);
+                look3.setBounds(370, 630, 110, 20);
                 look3.setForeground(Color.white);
                 look3.setFont(new Font("Arial", Font.BOLD, 25));
-                look3.setBackground(new Color(34,177,76));
+                look3.setBackground(new Color(34, 177, 76));
                 look3.setFocusable(false);
                 add(look1);
                 add(look2);
                 add(look3);
 
-                if(apperanceFlag==1)
-                {
+                if (apperanceFlag == 1) {
                     look1.setSelected(true);
                 }
 
-                if(apperanceFlag==2)
-                {
+                if (apperanceFlag == 2) {
                     look2.setSelected(true);
                 }
-                if(apperanceFlag==3)
-                {
+                if (apperanceFlag == 3) {
                     look3.setSelected(true);
                 }
-
 
 
                 saveSetting = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\saveSettings.png");
                 buttonSaveSettings = new JButton();
                 buttonSaveSettings.setIcon(new ImageIcon(String.valueOf(saveSetting)));
-                buttonSaveSettings.setBounds(280,690,115,43);
+                buttonSaveSettings.setBounds(280, 690, 115, 43);
 
-                add( buttonSaveSettings);
+                add(buttonSaveSettings);
                 buttonSaveSettings.setFocusable(false);
                 buttonSaveSettings.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         System.out.println("Zapisane dane");
-                        saveFile=new ArrayList<>();
-                        if(levelEasy.isSelected())
-                        {
+                        saveFile = new ArrayList<>();
+                        if (levelEasy.isSelected()) {
                             saveFile.add(1);
                         }
-                        if(levelMedium.isSelected())
-                        {
+                        if (levelMedium.isSelected()) {
                             saveFile.add(2);
                         }
-                        if(levelHard.isSelected())
-                        {
+                        if (levelHard.isSelected()) {
                             saveFile.add(3);
                         }
-                        if(freeMode.isSelected())
-                        {
-                         saveFile.add(1);
-                        }
-                        else if(timeMode.isSelected())
-                        {
+                        if (freeMode.isSelected()) {
+                            saveFile.add(1);
+                        } else if (timeMode.isSelected()) {
                             saveFile.add(2);
                         }
 
-                        if(look1.isSelected())
-                        {
+                        if (look1.isSelected()) {
                             saveFile.add(1);
                         }
 
-                        if(look2.isSelected())
-                        {
+                        if (look2.isSelected()) {
                             saveFile.add(2);
                         }
 
-                        if(look3.isSelected())
-                        {
+                        if (look3.isSelected()) {
                             saveFile.add(3);
                         }
-
-
-
 
 
                         System.out.println(saveFile);
 
 
-
                         modeFlag = saveFile.get(1);
                         apperanceFlag = saveFile.get(2);
                         levelFlag = saveFile.get(0);
-
 
 
                         try {
@@ -482,7 +454,6 @@ public class Frame extends JFrame implements ActionListener{
                             saveSettings.append(modeFlag + "\r\n");
                             saveSettings.append(apperanceFlag + "\r\n");
                             System.lineSeparator();
-
 
 
                             saveSettings.close();
@@ -497,7 +468,7 @@ public class Frame extends JFrame implements ActionListener{
                 backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
                 buttonBackMenu = new JButton();
                 buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
-                buttonBackMenu.setBounds(130,690,115,43);
+                buttonBackMenu.setBounds(130, 690, 115, 43);
                 add(buttonBackMenu);
                 buttonBackMenu.setFocusable(false);
                 buttonBackMenu.addActionListener(new ActionListener() {
@@ -508,8 +479,8 @@ public class Frame extends JFrame implements ActionListener{
                         look1.setVisible(false);
                         look2.setVisible(false);
                         look3.setVisible(false);
-                       timeMode.setVisible(false);
-                       freeMode.setVisible(false);
+                        timeMode.setVisible(false);
+                        freeMode.setVisible(false);
                         levelEasy.setVisible(false);
                         levelHard.setVisible(false);
                         levelMedium.setVisible(false);
@@ -534,8 +505,6 @@ public class Frame extends JFrame implements ActionListener{
 
                     }
                 });
-
-
 
 
                 setLayout(new BorderLayout());
@@ -615,7 +584,7 @@ public class Frame extends JFrame implements ActionListener{
                 result3 = new JLabel(String.valueOf(table_result[2]));
                 result3.setFont(new Font("czcionka", Font.BOLD, 22));
                 result3.setForeground(Color.black);
-                result3.setBounds(378 , 158, 500, 20);
+                result3.setBounds(378, 158, 500, 20);
                 add(result3);
                 result4 = new JLabel(String.valueOf(table_result[3]));
                 result4.setFont(new Font("czcionka", Font.BOLD, 22));
@@ -656,11 +625,11 @@ public class Frame extends JFrame implements ActionListener{
                 backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
                 buttonBackMenu = new JButton();
                 buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
-                buttonBackMenu.setBounds(10,690,115,43);
+                buttonBackMenu.setBounds(10, 690, 115, 43);
                 add(buttonBackMenu);
                 buttonBackMenu.setFocusable(false);
                 buttonBackMenu.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent e) {
 
                         background.setVisible(false);
                         buttonBackMenu.setVisible(false);
@@ -691,8 +660,6 @@ public class Frame extends JFrame implements ActionListener{
 
                     }
                 });
-
-
 
 
                 setLayout(new BorderLayout());
