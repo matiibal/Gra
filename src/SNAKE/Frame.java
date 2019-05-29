@@ -3,9 +3,7 @@ package SNAKE;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FilePermission;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,18 +30,31 @@ public class Frame extends JFrame implements ActionListener {
     static int flagStop = 0;
     private ArrayList<Integer> result;
     private int[] table_result;
-    private JLabel result1, result2, result3, result4, result5, result6, result7, result8, result9, result10; //najlepsze wyniki
+    private JLabel bestResult[]; //najlepsze wyniki
     public static int apperanceFlag = 1;
     public static int modeFlag = 1;
     public static int levelFlag = 1;
     private boolean keyFlag = true;
+    private boolean keyFlagU = true;
+    private boolean  keyFlagD = true;
+    private boolean keyFlagR = true;
+    private boolean keyFlagL = true;
+
+    public static void createFile() throws FileNotFoundException {  //tworzenie pliku
+        PrintWriter settings = new PrintWriter("setting.txt");
+        settings.println(1);
+        settings.println(1);
+        settings.println(1);
+        settings.close();
+
+    }
 
 
     public int getCount() {
         return count;
     }
 
-    public static void startTimer(int countPassed) {
+    public static void startTimer(int countPassed) {   //metoda timer do trybu Timer
         ActionListener action = new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -53,9 +64,6 @@ public class Frame extends JFrame implements ActionListener {
 
                 } else {
                     count--;
-
-                    // System.out.println(count + " sekund");
-
 
                 }
             }
@@ -68,10 +76,14 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
-    public Frame() {
+    public Frame() {     //konstruktor
         game = new Game();
         timerKey = new Timer(10, this);
-        addKeyListener(new KeyAdapter() {
+
+
+
+
+        addKeyListener(new KeyAdapter() {   //obsługa klawiszy
             @Override
             public void keyTyped(KeyEvent e) {
 
@@ -80,30 +92,40 @@ public class Frame extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 int keyCode = e.getKeyCode();
-                if (keyCode == KeyEvent.VK_RIGHT ) {
 
-                     game.vkRight();
+                if (keyCode == KeyEvent.VK_RIGHT) {
 
+
+                        if(keyFlag) {
+                            game.vkRight();
+                            keyFlag=false;
+                        }
 
 
                 }
                else if (keyCode == KeyEvent.VK_LEFT ){
 
-                    game.vkLeft();
+                    if(keyFlag) {
+                        game.vkLeft();
+                        keyFlag=false;
+                    }
 
 
                 }
                 else if (keyCode == KeyEvent.VK_UP ){
 
+                    if(keyFlag) {
                         game.vkUp();
-
+                        keyFlag=false;
+                    }
 
 
                 }
                 else if (keyCode == KeyEvent.VK_DOWN ) {
-
+                    if(keyFlag) {
                         game.vkDown();
-
+                        keyFlag=false;
+                    }
 
 
                 }
@@ -148,7 +170,23 @@ public class Frame extends JFrame implements ActionListener {
             @Override
             public void keyReleased(KeyEvent e) {
 
+                int keyCode = e.getKeyCode();
 
+                if (keyCode == KeyEvent.VK_RIGHT) {
+                    keyFlag=true;
+                }
+                else if(keyCode == KeyEvent.VK_LEFT)
+                {
+                    keyFlag=true;
+                }
+                else if(keyCode == KeyEvent.VK_UP)
+                {
+                    keyFlag=true;
+                }
+                else if(keyCode == KeyEvent.VK_DOWN)
+                {
+                    keyFlag=true;
+                }
 
 
 
@@ -163,13 +201,9 @@ public class Frame extends JFrame implements ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
-        startGame = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\startgame.png");
-        buttonStart = new JButton();
-        buttonStart.setIcon(new ImageIcon(String.valueOf(startGame)));
-        buttonStart.setBounds(70, 250, 350, 115);
+        ButtonStart buttons = new ButtonStart();
+        buttonStart = buttons.getButtonStart(); //przycisk Start
         add(buttonStart);
-        buttonStart.setFocusable(false);
-
         buttonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -182,8 +216,6 @@ public class Frame extends JFrame implements ActionListener {
                 Game gameTime = new Game();
                 count = gameTime.getGameTime();
                 flagGame = gameTime.getFlagGame();
-
-
                 try {
 
                     Scanner setting = new Scanner(Paths.get("setting.txt"));
@@ -193,7 +225,6 @@ public class Frame extends JFrame implements ActionListener {
 
                         int option = setting.nextInt();
                         settingFile.add(option);
-
                     }
 
                 } catch (IOException e1) {
@@ -204,11 +235,10 @@ public class Frame extends JFrame implements ActionListener {
 
                 }
                 System.out.println(settingFile);
-
-
+                levelFlag = settingFile.get(0);
                 modeFlag = settingFile.get(1);
                 apperanceFlag = settingFile.get(2);
-                levelFlag = settingFile.get(0);
+
 
                 if (modeFlag == 2) {
                     if (levelFlag == 1) {
@@ -228,18 +258,13 @@ public class Frame extends JFrame implements ActionListener {
             }
         });
 
-        option = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\option.png");
-        buttonOption = new JButton();
-        buttonOption.setIcon(new ImageIcon(String.valueOf(option)));
-        buttonOption.setBounds(70, 370, 350, 115);
+        ButtonOption button = new ButtonOption();
+        buttonOption = button.getButtonOption(); //przycisk option
         add(buttonOption);
-        buttonOption.setFocusable(false);
 
-        buttonOption.addActionListener(new ActionListener() {
+        buttonOption.addActionListener(new ActionListener() {  //dodanie sluchacza
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 try {
 
                     Scanner setting = new Scanner(Paths.get("setting.txt"));
@@ -401,13 +426,9 @@ public class Frame extends JFrame implements ActionListener {
                 }
 
 
-                saveSetting = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\saveSettings.png");
-                buttonSaveSettings = new JButton();
-                buttonSaveSettings.setIcon(new ImageIcon(String.valueOf(saveSetting)));
-                buttonSaveSettings.setBounds(280, 690, 115, 43);
-
+                ButtonSaveSettings buttonS = new ButtonSaveSettings();
+                buttonSaveSettings = buttonS.getButtonSaveSettings();
                 add(buttonSaveSettings);
-                buttonSaveSettings.setFocusable(false);
                 buttonSaveSettings.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -467,12 +488,11 @@ public class Frame extends JFrame implements ActionListener {
                 });
 
 
-                backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
-                buttonBackMenu = new JButton();
-                buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
-                buttonBackMenu.setBounds(130, 690, 115, 43);
+                ButtonBackMenu buttonB = new ButtonBackMenu();
+                buttonBackMenu = buttonB.getButtonBackMenu();
+
                 add(buttonBackMenu);
-                buttonBackMenu.setFocusable(false);
+
                 buttonBackMenu.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
 
@@ -519,12 +539,11 @@ public class Frame extends JFrame implements ActionListener {
             }
         });
 
-        bestScores = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\bestScores.png");
-        buttonBestScores = new JButton();
-        buttonBestScores.setIcon(new ImageIcon(String.valueOf(bestScores)));
-        buttonBestScores.setBounds(70, 490, 350, 115);
+        ButtonBestScores buttonBS = new ButtonBestScores();
+        buttonBestScores = buttonBS.getButtonBestScores();
+
         add(buttonBestScores);
-        buttonBestScores.setFocusable(false);
+
 
         buttonBestScores.addActionListener(new ActionListener() {
             @Override
@@ -534,100 +553,23 @@ public class Frame extends JFrame implements ActionListener {
                 buttonBestScores.setVisible(false);
                 buttonStart.setVisible(false);
 
-                try {
-
-                    Scanner odczyt = new Scanner(Paths.get("result.txt"));
-                    result = new ArrayList();
-                    for (int i = 0; i < 10; i++) {
-                        result.add(0);
-                    }
-
-
-                    while (odczyt.hasNext()) {
-
-                        int zmienna = odczyt.nextInt();
-
-                        result.add(zmienna);
-                        Collections.sort(result);
-                        Collections.reverse(result);
-
-                    }
-
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                    result = new ArrayList();
-                    for (int i = 0; i < 10; i++) {
-                        result.add(0);
-                    }
-                }
-
-                table_result = new int[10];
-
-                for (int i = 0; i < table_result.length; i++) {
-                    table_result[i] = result.get(i);
-                }
-                for (int el : table_result) {
-                    System.out.println(el);
-                }
 
                 setBackground(Color.GRAY);
+                SaveResult saveResult = new SaveResult();
+
+                bestResult = new JLabel[10];
+                SaveResult saveR = new SaveResult();
+
+                bestResult = saveR.getBestResult();
+
+                for(int i=0; i<10; i++)
+                {
+                    add(bestResult[i]);
+                }
 
 
-                result1 = new JLabel(String.valueOf(table_result[0]));
-                result1.setFont(new Font("czcionka", Font.BOLD, 22));
-                result1.setForeground(Color.black);
-                result1.setBounds(163, 158, 500, 20);
-                add(result1);
-                result2 = new JLabel(String.valueOf(table_result[1]));
-                result2.setFont(new Font("czcionka", Font.BOLD, 22));
-                result2.setForeground(Color.black);
-                result2.setBounds(273, 158, 500, 20);
-                add(result2);
-                result3 = new JLabel(String.valueOf(table_result[2]));
-                result3.setFont(new Font("czcionka", Font.BOLD, 22));
-                result3.setForeground(Color.black);
-                result3.setBounds(378, 158, 500, 20);
-                add(result3);
-                result4 = new JLabel(String.valueOf(table_result[3]));
-                result4.setFont(new Font("czcionka", Font.BOLD, 22));
-                result4.setForeground(Color.black);
-                result4.setBounds(483, 158, 500, 20);
-                add(result4);
-                result5 = new JLabel(String.valueOf(table_result[4]));
-                result5.setFont(new Font("czcionka", Font.BOLD, 22));
-                result5.setForeground(Color.black);
-                result5.setBounds(593, 158, 500, 20);
-                add(result5);
-                result6 = new JLabel(String.valueOf(table_result[5]));
-                result6.setFont(new Font("czcionka", Font.BOLD, 22));
-                result6.setForeground(Color.black);
-                result6.setBounds(593, 268, 500, 20);
-                add(result6);
-                result7 = new JLabel(String.valueOf(table_result[6]));
-                result7.setFont(new Font("czcionka", Font.BOLD, 22));
-                result7.setForeground(Color.black);
-                result7.setBounds(593, 368, 500, 20);
-                add(result7);
-                result8 = new JLabel(String.valueOf(table_result[7]));
-                result8.setFont(new Font("czcionka", Font.BOLD, 22));
-                result8.setForeground(Color.black);
-                result8.setBounds(593, 478, 500, 20);
-                add(result8);
-                result9 = new JLabel(String.valueOf(table_result[8]));
-                result9.setFont(new Font("czcionka", Font.BOLD, 22));
-                result9.setForeground(Color.black);
-                result9.setBounds(703, 478, 500, 20);
-                add(result9);
-                result10 = new JLabel(String.valueOf(table_result[9]));
-                result10.setFont(new Font("czcionka", Font.BOLD, 22));
-                result10.setForeground(Color.black);
-                result10.setBounds(808, 478, 500, 20);
-                add(result10);
-
-                backMenu = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\backMenu.png");
-                buttonBackMenu = new JButton();
-                buttonBackMenu.setIcon(new ImageIcon(String.valueOf(backMenu)));
-                buttonBackMenu.setBounds(10, 690, 115, 43);
+               ButtonBackMenu backMenu = new ButtonBackMenu();
+                buttonBackMenu = backMenu.getButtonBackMenu();
                 add(buttonBackMenu);
                 buttonBackMenu.setFocusable(false);
                 buttonBackMenu.addActionListener(new ActionListener() {
@@ -635,16 +577,10 @@ public class Frame extends JFrame implements ActionListener {
 
                         background.setVisible(false);
                         buttonBackMenu.setVisible(false);
-                        result1.setVisible(false);
-                        result2.setVisible(false);
-                        result3.setVisible(false);
-                        result4.setVisible(false);
-                        result5.setVisible(false);
-                        result6.setVisible(false);
-                        result7.setVisible(false);
-                        result8.setVisible(false);
-                        result9.setVisible(false);
-                        result10.setVisible(false);
+                       for(int i=0; i<10;i++)
+                       {
+                           bestResult[i].setVisible(false);
+                       }
 
                         buttonStart.setVisible(true);
                         buttonBestScores.setVisible(true);

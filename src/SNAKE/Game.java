@@ -15,12 +15,12 @@ public class Game extends JPanel implements ActionListener {
     private ImageIcon rightHead, leftHead, upHead, downHead, body;
     private ArrayList<Integer> resultList;
     private Timer timer;
-    private int delay = 100;
+    private int delay = 110 ;
     private int gameTime = 30;
     private int countGame = 10;
     private int defaultCount = 30;
     private boolean left = false;
-    private boolean right = false;
+    private boolean right = true;
     private boolean up = false;
     private boolean down = false;
     private int lenghtDefaultSnake = 3;
@@ -29,6 +29,7 @@ public class Game extends JPanel implements ActionListener {
     private int appearanceFlag = 1;
     private int levelFlag = 1;
     private Image foodB, foodA, foodO, headL, headU, headR, headD, bodyS;
+    private boolean flagKey = false;
 
     public int isGameMode() {
         return gameMode;
@@ -464,6 +465,7 @@ public class Game extends JPanel implements ActionListener {
             down = false;
             left = false;
         }
+
     }
 
     void vkLeft() {
