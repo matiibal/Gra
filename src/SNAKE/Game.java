@@ -105,7 +105,7 @@ public class Game extends JPanel implements ActionListener {
             snakeLenghtY[1] = 100;
             snakeLenghtY[0] = 100;
 
-            rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
+            rightHead = new ImageIcon("right.png");
 
             headR = rightHead.getImage();
             obj.drawImage(headR, snakeLenghtX[0], snakeLenghtY[0], this);
@@ -154,10 +154,10 @@ public class Game extends JPanel implements ActionListener {
 
 
         appearanceFlag = Frame.apperanceFlag;
-
+         //wyglad gry, trzy tryby
         if (appearanceFlag == 1) {
 
-            rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
+            rightHead = new ImageIcon("right.png");
 
             headR = rightHead.getImage();
             obj.drawImage(headR, snakeLenghtX[0], snakeLenghtY[0], this);
@@ -166,30 +166,30 @@ public class Game extends JPanel implements ActionListener {
             for (int i = 0; i < lenghtDefaultSnake; i++) {
                 if (i == 0 && right) {
                     moves++;
-                    rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right.png");
+                    rightHead = new ImageIcon("right.png");
                     headR = rightHead.getImage();
                     obj.drawImage(headR, snakeLenghtX[i], snakeLenghtY[i], this);
 
 
                 } else if (i == 0 && left) {
-                    leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left.png");
+                    leftHead = new ImageIcon("left.png");
                     headL = leftHead.getImage();
                     obj.drawImage(headL, snakeLenghtX[i], snakeLenghtY[i], this);
 
 
                 } else if (i == 0 && up) {
-                    upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up.png");
+                    upHead = new ImageIcon("up.png");
                     headU = upHead.getImage();
                     obj.drawImage(headU, snakeLenghtX[i], snakeLenghtY[i], this);
 
 
                 } else if (i == 0 && down) {
-                    downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down.png");
+                    downHead = new ImageIcon("down.png");
 
                     headD = downHead.getImage();
                     obj.drawImage(headD, snakeLenghtX[i], snakeLenghtY[i], this);
                 } else if (i != 0) {
-                    body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body.png");
+                    body = new ImageIcon("body.png");
 
 
                     bodyS = body.getImage();
@@ -198,26 +198,26 @@ public class Game extends JPanel implements ActionListener {
 
             }
         } else if (appearanceFlag == 2) {
-            rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right2.png");
+            rightHead = new ImageIcon("right2.png");
             rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
             for (int i = 0; i < lenghtDefaultSnake; i++) {
                 if (i == 0 && right && !left && !up && !down) {
 
-                    rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right2.png");
+                    rightHead = new ImageIcon("right2.png");
                     rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                 } else if (i == 0 && left && !right && !up && !down) {
 
-                    leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left2.png");
+                    leftHead = new ImageIcon("left2.png");
                     leftHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                 } else if (i == 0 && up && !down && !left && !right) {
 
-                    upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up2.png");
+                    upHead = new ImageIcon("up2.png");
                     upHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                 } else if (i == 0 && down && !up && !left && !right) {
-                    downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down2.png");
+                    downHead = new ImageIcon("down2.png");
                     downHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                 } else if (i != 0) {
-                    body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body2.png");
+                    body = new ImageIcon("body2.png");
                     body.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                 }
 
@@ -225,25 +225,25 @@ public class Game extends JPanel implements ActionListener {
 
         } else if (appearanceFlag == 3) {
             {
-                rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right3.png");
+                rightHead = new ImageIcon("right3.png");
                 rightHead.paintIcon(this, obj, snakeLenghtX[0], snakeLenghtY[0]);
 
                 for (int i = 0; i < lenghtDefaultSnake; i++) {
                     if (i == 0 && right) {
                         moves++;
-                        rightHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\right3.png");
+                        rightHead = new ImageIcon("right3.png");
                         rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                     } else if (i == 0 && left) {
-                        leftHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\left3.png");
+                        leftHead = new ImageIcon("left3.png");
                         leftHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                     } else if (i == 0 && up) {
-                        upHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\up3.png");
+                        upHead = new ImageIcon("up3.png");
                         upHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                     } else if (i == 0 && down) {
-                        downHead = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\down3.png");
+                        downHead = new ImageIcon("down3.png");
                         downHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                     } else if (i != 0) {
-                        body = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\body3.png");
+                        body = new ImageIcon("body3.png");
                         body.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                     }
 
@@ -252,9 +252,9 @@ public class Game extends JPanel implements ActionListener {
         }
 
 
-        foodApple = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\food.png");
-        foodBanana = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\foodBanana.png");
-        foodOrange = new ImageIcon("C:\\Users\\mateu\\IdeaProjects\\SNAKE\\src\\foodOrange.png");
+        foodApple = new ImageIcon("food.png");
+        foodBanana = new ImageIcon("foodBanana.png");
+        foodOrange = new ImageIcon("foodOrange.png");
 
 
         //ramka
@@ -262,13 +262,15 @@ public class Game extends JPanel implements ActionListener {
         foodBanana.paintIcon(this, obj, 450, 25);
         foodOrange.paintIcon(this, obj, 600, 25);
 
+
+        //niepozwolenie na pojawianiu sie jablek na wezu
         for (int i = 1; i < lenghtDefaultSnake; i++) {
             if (foodXPosition[xpos] == snakeLenghtX[i] && foodYPosition[ypos] == snakeLenghtY[i]) {
                 xpos = random.nextInt(34);
                 ypos = random.nextInt(23);
             }
         }
-
+         //jesli zje owoc tzn. glowa bedzie na pozycji owocu
         if (foodXPosition[xpos] == snakeLenghtX[0] && foodYPosition[ypos] == snakeLenghtY[0]) {
 
             if (score % 15 == 0 && score != 0) {
@@ -334,16 +336,13 @@ public class Game extends JPanel implements ActionListener {
 
 
         if (score % 15 == 0 && score != 0) {
-            //foodBanana.paintIcon(this, obj, foodXPosition[xpos], foodYPosition[ypos]);
             foodB = foodBanana.getImage();
             obj.drawImage(foodB, foodXPosition[xpos], foodYPosition[ypos], this);
 
         } else if (score % 18 == 0 && score != 0) {
-            //foodOrange.paintIcon(this, obj, foodXPosition[xpos], foodYPosition[ypos]);
             foodO = foodOrange.getImage();
             obj.drawImage(foodO, foodXPosition[xpos], foodYPosition[ypos], this);
         } else {
-            //foodApple.paintIcon(this, obj, foodXPosition[xpos], foodYPosition[ypos]);
             foodA = foodApple.getImage();
             obj.drawImage(foodA, foodXPosition[xpos], foodYPosition[ypos], this);
         }
@@ -352,6 +351,7 @@ public class Game extends JPanel implements ActionListener {
         for (int b = 1; b < lenghtDefaultSnake; b++) {
 
             int z;
+            //jezeli k=ktorys z elementow poza glowa bedzie jej rowny to zakoncz gre
             if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0] || !Frame.statusGame) {
 
 
@@ -387,7 +387,7 @@ public class Game extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         timer.start();
-
+        //ruch weza po nacisnieciu odpowiednich klawiszy
         if (right) {
             if (lenghtDefaultSnake - 1 + 1 >= 0)
                 System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
@@ -454,7 +454,7 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
-
+//obsluga klawiatury
     void vkRight() {
 
         moves++;
@@ -517,8 +517,8 @@ public class Game extends JPanel implements ActionListener {
         if (!timer.isRunning() && Frame.flagStop == 0) {
             try {
                 FileWriter zapis = new FileWriter("result.txt", true);
-                zapis.append(score + "\r\n");
-                System.lineSeparator();
+                zapis.append(String.valueOf(score)).append("\r\n");
+             //   System.lineSeparator();
                 zapis.close();
             } catch (IOException ex) {
                 System.out.println("File errror");
@@ -571,11 +571,11 @@ public class Game extends JPanel implements ActionListener {
 
 
         if (!timer.isRunning() && Frame.flagStop == 0) {
-
+           //zapis wynikow
             try {
                 FileWriter save = new FileWriter("result.txt", true);
-                save.append(score + "\r\n");
-                System.lineSeparator();
+                save.append(String.valueOf(score)).append("\r\n");
+                //System.lineSeparator();
                 save.close();
             } catch (IOException ex) {
                 System.out.println("File errror");

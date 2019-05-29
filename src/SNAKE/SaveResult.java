@@ -26,16 +26,11 @@ public class SaveResult {
             for (int i = 0; i < 10; i++) {
                 result.add(0);
             }
-
-
             while (odczyt.hasNext()) {
-
-                int zmienna = odczyt.nextInt();
-
-                result.add(zmienna);
+                int res = odczyt.nextInt();
+                result.add(res);
                 Collections.sort(result);
                 Collections.reverse(result);
-
             }
 
         } catch (
@@ -46,26 +41,21 @@ public class SaveResult {
                 result.add(0);
             }
         }
-
         table_result = new int[10];
-
         for (int i = 0; i < table_result.length; i++) {
             table_result[i] = result.get(i);
         }
         for (int el : table_result) {
             System.out.println(el);
         }
-
-
         bestResult = new JLabel[10];
         for (int i = 0; i < 10; i++) {
-
+            //napisy
             bestResult[i] = new JLabel(String.valueOf(table_result[i]));
             bestResult[i].setFont(new Font("czcionka", Font.BOLD, 22));
             bestResult[i].setForeground(Color.black);
         }
-
-
+        //ustawienie polozenia na wezu wynikow
         bestResult[0].setBounds(163, 158, 500, 20);
         bestResult[1].setBounds(273, 158, 500, 20);
         bestResult[2].setBounds(378, 158, 500, 20);
