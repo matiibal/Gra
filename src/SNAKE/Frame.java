@@ -6,8 +6,15 @@ import java.awt.event.*;
 import java.io.*;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+
+
+/**
+ * @author Mateusz Bałazy
+ * Okno menu głownego
+ */
 
 public class Frame extends JFrame implements ActionListener {
     private JLabel background;
@@ -17,7 +24,6 @@ public class Frame extends JFrame implements ActionListener {
     private JRadioButton levelEasy, levelMedium, levelHard;
     private JRadioButton freeMode, timeMode;
     private JRadioButton look1, look2, look3;
-    private ImageIcon startGame, option, bestScores, backMenu, saveSetting;
     private JButton buttonStart, buttonOption, buttonBestScores, buttonBackMenu, buttonSaveSettings;
     private Game game;
     private static int delayGame = 10;
@@ -25,7 +31,6 @@ public class Frame extends JFrame implements ActionListener {
     static int count = 0;
     static boolean statusGame = true;
     private int flagGame = 0;
-    private int extraTime = 0;
     private boolean buttonStartPressed = false;
     static int flagStop = 0;
     private ArrayList<Integer> result;
@@ -34,12 +39,15 @@ public class Frame extends JFrame implements ActionListener {
     public static int apperanceFlag = 1;
     public static int modeFlag = 1;
     public static int levelFlag = 1;
-    private boolean keyFlag = true;
-    private boolean keyFlagU = true;
-    private boolean  keyFlagD = true;
-    private boolean keyFlagR = true;
-    private boolean keyFlagL = true;
+    private ArrayList<Integer> bufor = new ArrayList<>();
+    private boolean flagaZmiany = true;
+    private final Set<Character> pressed = new HashSet<Character>();
 
+
+    /**
+     * stworzenie pliku do zapisu
+     * @throws FileNotFoundException
+     */
     public static void createFile() throws FileNotFoundException {  //tworzenie pliku
         PrintWriter settings = new PrintWriter("setting.txt");
         settings.println(1);
@@ -49,12 +57,62 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
+    /**
+     * odczytanie zapisu ustawień
+     */
+    public void readSetting() {
+        try {
 
+            Scanner setting = new Scanner(Paths.get("setting.txt"));
+            settingFile = new ArrayList();
+
+            while (setting.hasNext()) {
+
+                int option = setting.nextInt();
+                settingFile.add(option);
+            }
+
+        } catch (IOException e1) {
+            e1.printStackTrace();
+            settingFile.add(1);
+            settingFile.add(1);
+            settingFile.add(1);
+
+        }
+    }
+
+    /**
+     * zapis do pliku utawień
+     */
+    public void saveSetting() {
+        try {
+            //zapisanie danych
+            FileWriter saveSettings = new FileWriter("setting.txt");
+
+            saveSettings.append(String.valueOf(levelFlag)).append("\r\n");
+            saveSettings.append(String.valueOf(modeFlag)).append("\r\n");
+            saveSettings.append(String.valueOf(apperanceFlag)).append("\r\n");
+            //  System.lineSeparator();
+
+
+            saveSettings.close();
+        } catch (IOException ex) {
+            System.out.println("File errror");
+        }
+    }
+
+    /**
+     * @return count, licznik timera w trybie gry TIMEMODE
+     */
     public int getCount() {
         return count;
     }
 
-    public static void startTimer(int countPassed) {   //metoda timer do trybu Timer
+    /**
+     * dzialanie timersa
+     * @param countPassed
+     */
+    public static void startTimer(int countPassed) {
         ActionListener action = e -> {
             if (count == 0) {
                 statusGame = false;
@@ -79,8 +137,9 @@ public class Frame extends JFrame implements ActionListener {
 
 
 
-        addKeyListener(new KeyAdapter() {   //obsługa klawiszy
+        addKeyListener(new KeyListener() {
             @Override
+
             public void keyTyped(KeyEvent e) {
 
             }
@@ -91,47 +150,85 @@ public class Frame extends JFrame implements ActionListener {
 
                 if (keyCode == KeyEvent.VK_RIGHT) {
 
-
-                        if(keyFlag) {
-                            game.vkRight();
-                            keyFlag=false;
-                        }
-
-
-                }
-               else if (keyCode == KeyEvent.VK_LEFT ){
-
-                    if(keyFlag) {
-                        game.vkLeft();
-                        keyFlag=false;
+                    game.vkRight();
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
                     }
 
 
                 }
-                else if (keyCode == KeyEvent.VK_UP ){
 
-                    if(keyFlag) {
-                        game.vkUp();
-                        keyFlag=false;
+
+                if (keyCode == KeyEvent.VK_LEFT) {
+
+                    game.vkLeft();
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
                     }
 
 
                 }
-                else if (keyCode == KeyEvent.VK_DOWN ) {
-                    if(keyFlag) {
-                        game.vkDown();
-                        keyFlag=false;
+
+                if (keyCode == KeyEvent.VK_DOWN) {
+                    game.vkDown();
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
                     }
 
 
                 }
-                else if (keyCode == KeyEvent.VK_ENTER) {
+
+                if (keyCode == KeyEvent.VK_UP) {
+
+                    game.vkUp();
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+
+
+
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+
+
+            }
+
+
+
+        });
+
+
+
+
+
+        addKeyListener(new KeyAdapter() {   //obsługa klawiszy
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keyCode = e.getKeyCode();
+
+                if (keyCode == KeyEvent.VK_ENTER) {
 
                     game.vkEnter();
+                    pressed.clear();
 
-
-                }
-               else if (keyCode == KeyEvent.VK_SPACE) {
+                } else if (keyCode == KeyEvent.VK_SPACE) {
 
                     game.vkSpace();
                     if (flagStop == 0) {
@@ -140,8 +237,7 @@ public class Frame extends JFrame implements ActionListener {
                         flagStop = 0;
                     }
 
-                }
-              else  if (keyCode == KeyEvent.VK_ESCAPE) {
+                } else if (keyCode == KeyEvent.VK_ESCAPE) {
 
                     game.vkEsc();
                     if (game.isFlagBacground()) {
@@ -162,31 +258,15 @@ public class Frame extends JFrame implements ActionListener {
 
                 }
             }
+
             @Override
             public void keyReleased(KeyEvent e) {
-
-                int keyCode = e.getKeyCode();
-
-                if (keyCode == KeyEvent.VK_RIGHT) {
-                    keyFlag=true;
-                }
-                else if(keyCode == KeyEvent.VK_LEFT)
-                {
-                    keyFlag=true;
-                }
-                else if(keyCode == KeyEvent.VK_UP)
-                {
-                    keyFlag=true;
-                }
-                else if(keyCode == KeyEvent.VK_DOWN)
-                {
-                    keyFlag=true;
-                }
-
 
 
             }
         });
+
+
         setBounds(400, 100, 900, 800);
 
         setTitle("Snake");
@@ -207,27 +287,12 @@ public class Frame extends JFrame implements ActionListener {
             buttonStart.setVisible(false);
             setBackground(new Color(48, 172, 60));
             Game gameTime = new Game();
+
+
             count = gameTime.getGameTime();
             flagGame = gameTime.getFlagGame();
 
-            try {
-
-                Scanner setting = new Scanner(Paths.get("setting.txt"));
-                settingFile = new ArrayList();
-
-                while (setting.hasNext()) {
-
-                    int option = setting.nextInt();
-                    settingFile.add(option);
-                }
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-                settingFile.add(1);
-                settingFile.add(1);
-                settingFile.add(1);
-
-            }
+            readSetting();
             System.out.println(settingFile);
             //odczyt z pliku do flag
             levelFlag = settingFile.get(0);
@@ -260,25 +325,7 @@ public class Frame extends JFrame implements ActionListener {
         //dodanie sluchacza
         buttonOption.addActionListener(e -> {
             //odczyt z pliku opcji
-            try {
-
-                Scanner setting = new Scanner(Paths.get("setting.txt"));
-                settingFile = new ArrayList();
-
-                while (setting.hasNext()) {
-
-                    int option = setting.nextInt();
-                    settingFile.add(option);
-
-                }
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-                settingFile.add(1);
-                settingFile.add(1);
-                settingFile.add(1);
-
-            }
+            readSetting();
             System.out.println(settingFile);
 
             //odczyt do flag
@@ -410,20 +457,7 @@ public class Frame extends JFrame implements ActionListener {
                 levelFlag = saveFile.get(0);
 
 
-                try {
-                    //zapisanie danych
-                    FileWriter saveSettings = new FileWriter("setting.txt");
-
-                    saveSettings.append(String.valueOf(levelFlag)).append("\r\n");
-                    saveSettings.append(String.valueOf(modeFlag)).append("\r\n");
-                    saveSettings.append(String.valueOf(apperanceFlag)).append("\r\n");
-                  //  System.lineSeparator();
-
-
-                    saveSettings.close();
-                } catch (IOException ex) {
-                    System.out.println("File errror");
-                }
+                saveSetting();
 
             });
 
@@ -497,8 +531,7 @@ public class Frame extends JFrame implements ActionListener {
 
             bestResult = saveR.getBestResult();
             //wyswietlenie wynikow
-            for(int i=0; i<10; i++)
-            {
+            for (int i = 0; i < 10; i++) {
                 add(bestResult[i]);
             }
 
@@ -511,10 +544,9 @@ public class Frame extends JFrame implements ActionListener {
 
                 background.setVisible(false);
                 buttonBackMenu.setVisible(false);
-               for(int i=0; i<10;i++)
-               {
-                   bestResult[i].setVisible(false);
-               }
+                for (int i = 0; i < 10; i++) {
+                    bestResult[i].setVisible(false);
+                }
 
                 buttonStart.setVisible(true);
                 buttonBestScores.setVisible(true);

@@ -2,9 +2,17 @@ package SNAKE;
 
 import javax.swing.*;
 
+/**
+ * Klasa - przycisk w menu glownym Opcje
+ */
+
+
 public class ButtonOption {
     private ImageIcon  option;
 
+    /**
+     * @return bieżacy buttonOption
+     */
     public JButton getButtonOption() {
         return buttonOption;
     }

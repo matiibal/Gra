@@ -3,10 +3,18 @@ package SNAKE;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Klasa - przycisk zapisujacy ustawienia gry
+ */
+
+
 public class ButtonSaveSettings {
 
     private ImageIcon saveSetting;
 
+    /**
+     * @return bieżacy buttonSaveSettings
+     */
     public JButton getButtonSaveSettings() {
         return buttonSaveSettings;
     }

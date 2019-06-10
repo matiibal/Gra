@@ -8,6 +8,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+
+/**
+ * Klasa  - wyswietlenie wynikow gry
+ */
+
 public class SaveResult {
     public JLabel[] getBestResult() {
         return bestResult;
@@ -17,7 +22,9 @@ public class SaveResult {
     private ArrayList<Integer> result;
     private int[] table_result;
 
-    public SaveResult() {
+
+
+    private void SaveResult() {
 
         try {
 

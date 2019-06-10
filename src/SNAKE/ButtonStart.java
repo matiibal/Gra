@@ -2,9 +2,17 @@ package SNAKE;
 
 import javax.swing.*;
 
+/**
+ * Klasa - przycisk start - rozpoczecie gry
+ */
+
 public class ButtonStart {
     private ImageIcon startGame;
     private JButton buttonStart;
+
+    /**
+     * @return biezacy buttonStart
+     */
     public JButton getButtonStart() {
         return buttonStart;
     }

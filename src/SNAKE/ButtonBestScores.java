@@ -2,8 +2,17 @@ package SNAKE;
 
 import javax.swing.*;
 
+/**
+ * Klasa - przycisk najlepsze wyniki
+ */
+
 public class ButtonBestScores {
     private ImageIcon bestScores;
+
+
+    /**
+     * @return bieżący buttonBestScores
+     */
 
     public JButton getButtonBestScores() {
         return buttonBestScores;

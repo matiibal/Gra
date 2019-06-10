@@ -2,10 +2,18 @@ package SNAKE;
 
 import javax.swing.*;
 
+
+/**
+ * Klasa przycisk - powrot do menu głownego
+ */
+
 public class ButtonBackMenu {
 
     private ImageIcon backMenu;
 
+    /**
+     * @return bieżący buttonBackMenu
+     */
     public JButton getButtonBackMenu() {
         return buttonBackMenu;
     }
