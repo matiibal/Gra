@@ -7,10 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-
-
 /**
- * Klasa  - wyswietlenie wynikow gry
+ * Klasa wyswietlajaca najlepsze wyniki
  */
 
 public class SaveResult {
@@ -22,9 +20,7 @@ public class SaveResult {
     private ArrayList<Integer> result;
     private int[] table_result;
 
-
-
-    private void SaveResult() {
+    public SaveResult() {
 
         try {
 
@@ -76,4 +72,3 @@ public class SaveResult {
     }
 
 }
-

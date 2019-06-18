@@ -10,9 +10,7 @@ public class ButtonStart {
     private ImageIcon startGame;
     private JButton buttonStart;
 
-    /**
-     * @return biezacy buttonStart
-     */
+
     public JButton getButtonStart() {
         return buttonStart;
     }

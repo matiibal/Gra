@@ -10,9 +10,7 @@ public class ButtonBestScores {
     private ImageIcon bestScores;
 
 
-    /**
-     * @return bieżący buttonBestScores
-     */
+
 
     public JButton getButtonBestScores() {
         return buttonBestScores;

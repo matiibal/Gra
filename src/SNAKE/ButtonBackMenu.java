@@ -11,9 +11,7 @@ public class ButtonBackMenu {
 
     private ImageIcon backMenu;
 
-    /**
-     * @return bieżący buttonBackMenu
-     */
+
     public JButton getButtonBackMenu() {
         return buttonBackMenu;
     }

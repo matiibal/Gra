@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * @author Mateusz Bałazy
  * Gra Snake, realizacja gry tzn. jej funkcjonalnosci, itd.
+ * @author Mateusz Bałazy
+ *
  */
 
 
@@ -35,7 +36,7 @@ public class Game extends JPanel implements ActionListener {
     private int appearanceFlag = 1;
     private int levelFlag = 1;
     private Image foodB, foodA, foodO, headL, headU, headR, headD, bodyS;
-    private boolean flagKey = false, flag1=false, flag2=false, flag3=false, flag4=false;
+    private boolean flagRight = false, flagLeft = false, flagUp = false, flagDown = false;
 
 
 
@@ -47,18 +48,12 @@ public class Game extends JPanel implements ActionListener {
 
     private int gameMode = 2;
 
-    /**
-     * sprawdza czy jest tlo domyslne
-     * @return flagBacground
-     */
+
     public boolean isFlagBacground() {
         return flagBacground;
     }
 
-    /**
-     * ustawienie domyslnego tla
-     * @param flagBacground
-     */
+
     public void setFlagBacground(boolean flagBacground) {
         this.flagBacground = flagBacground;
     }
@@ -93,12 +88,12 @@ public class Game extends JPanel implements ActionListener {
     public void vkEsc() {
 
 
-        if (!timer.isRunning() && Frame.flagStop == 0) {
+        if (!timer.isRunning() && Menu.flagStop == 0) {
             //zapis wynikow
             saveResult();
             flagBacground = true;
             setVisible(false);
-            Frame.statusGame = true;
+            Menu.statusGame = true;
             moves = 0;
             score = 0;
             scoreOrange = 0;
@@ -117,10 +112,10 @@ public class Game extends JPanel implements ActionListener {
      * Klawiatura - klawisz Enter - gra od nowa
      */
     public void vkEnter() {
-        if (!timer.isRunning() && Frame.flagStop == 0) {
+        if (!timer.isRunning() && Menu.flagStop == 0) {
             saveResult();
 
-            Frame.statusGame = true;
+            Menu.statusGame = true;
             moves = 0;
             score = 0;
             scoreOrange = 0;
@@ -134,12 +129,12 @@ public class Game extends JPanel implements ActionListener {
             //Frame.timerGame.start();
             if (gameMode == 2) {
                 if (levelFlag == 1) {
-                    Frame.startTimer(defaultCount + 30);
+                    Menu.startTimer(defaultCount + 30);
                 } else if (levelFlag == 2) {
-                    Frame.startTimer(defaultCount + 15);
+                   Menu.startTimer(defaultCount + 15);
 
                 } else if (levelFlag == 3) {
-                    Frame.startTimer(defaultCount);
+                    Menu.startTimer(defaultCount);
 
                 }
             }
@@ -171,11 +166,11 @@ public class Game extends JPanel implements ActionListener {
             if (score % 15 == 0 && score != 0) {
 
                 if (gameMode == 2) {
-                    Frame.count += 5;
+                    Menu.count += 5;
                     score += 66;
                     if (scoreOrange % 20 == 0 && scoreOrange != 0) {
                         score += 660;
-                        Frame.count += 30;
+                        Menu.count += 30;
                     }
                 } else if (gameMode == 1) {
 
@@ -189,11 +184,11 @@ public class Game extends JPanel implements ActionListener {
             } else if (score % 18 == 0 && score != 0) {
 
                 if (gameMode == 2) {
-                    Frame.count += 3;
+                    Menu.count += 3;
                     score += 33;
                     if (scoreBanana % 20 == 0 && scoreBanana != 0) {
                         score += 330;
-                        Frame.count += 30;
+                        Menu.count += 30;
                     }
                 } else if (gameMode == 1) {
                     if (levelFlag == 1) score += 33;
@@ -206,11 +201,11 @@ public class Game extends JPanel implements ActionListener {
             } else {
 
                 if (gameMode == 2) {
-                    Frame.count += 1;
+                    Menu.count += 1;
                     score += 3;
                     if (scoreApple % 20 == 0 && scoreApple != 0) {
                         score += 150;
-                        Frame.count += 15;
+                        Menu.count += 15;
                     }
                 } else if (gameMode == 1) {
                     score += 3;
@@ -240,10 +235,10 @@ public class Game extends JPanel implements ActionListener {
 
             int z;
             //jezeli k=ktorys z elementow poza glowa bedzie jej rowny to zakoncz gre
-            if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0] || !Frame.statusGame) {
+            if (snakeLenghtY[b] == snakeLenghtY[0] && snakeLenghtX[b] == snakeLenghtX[0] || !Menu.statusGame) {
 
 
-                Frame.flagStop = 0;
+                Menu.flagStop = 0;
                 right = false;
                 left = false;
                 up = false;
@@ -251,7 +246,7 @@ public class Game extends JPanel implements ActionListener {
                 timer.stop();
 
                 if (gameMode == 2) {
-                    Frame.timerGame.stop();
+                    Menu.timerGame.stop();
                 }
                 return true;
             }
@@ -262,7 +257,7 @@ public class Game extends JPanel implements ActionListener {
     /**
      * ruch weza w prawo
      */
-      public synchronized void rightMove() {
+      public void rightMove() {
 
 
                if (lenghtDefaultSnake - 1 + 1 >= 0)
@@ -284,14 +279,14 @@ public class Game extends JPanel implements ActionListener {
                }
 
                pressRight = false;
-               flag1=true;
+
            }
        }
 
 /**
  * ruch weza w lewo
  */
-       public synchronized void leftMove() {
+       public void leftMove() {
            if (lenghtDefaultSnake - 1 + 1 >= 0)
                System.arraycopy(snakeLenghtY, 0, snakeLenghtY, 1, lenghtDefaultSnake - 1 + 1);
            for (int r = lenghtDefaultSnake; r >= 0; r--) {
@@ -305,14 +300,14 @@ public class Game extends JPanel implements ActionListener {
                    snakeLenghtX[r] = 850;
                }
                pressLeft = false;
-flag2=true;
+
            }
        }
 
 /**
  * ruch weza w gore
  */
-       public synchronized void upMove() {
+       public void upMove() {
 
            if (lenghtDefaultSnake - 1 + 1 >= 0)
                System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
@@ -327,13 +322,13 @@ flag2=true;
                    snakeLenghtY[r] = 700;
                }
            }
-           flag3=true;
+
        }
 
     /**
      * ruch weza w dol
      */
-       public  synchronized void downMove() {
+       public  void downMove() {
            if (lenghtDefaultSnake - 1 + 1 >= 0)
                System.arraycopy(snakeLenghtX, 0, snakeLenghtX, 1, lenghtDefaultSnake - 1 + 1);
            for (int r = lenghtDefaultSnake; r >= 0; r--) {
@@ -347,7 +342,7 @@ flag2=true;
                    snakeLenghtY[r] = 75;
                }
            }
-           flag4=true;
+
 
        }
 
@@ -394,33 +389,42 @@ flag2=true;
     /**
      * Klawiatura - ruch w prawo
      */
-    public synchronized void  vkRight() {
+    public void  vkRight() {
 
-        moves++;
+        flagRight=true;
         pressRight = true;
         if (!left ) {
+
             right = true;
+            repaint();
             up = false;
             down = false;
             left = false;
+
+
         }
+        moves++;
+        flagRight=false;
 
     }
     /**
      * Klawiatura - ruch w lewo
      */
-    public synchronized void vkLeft() {
+    public void vkLeft() {
         pressLeft = true;
-        if (moves > 0) {
-            moves++;
+        if (!flagRight  && moves>0) {
+
 
             if (!right) {
+
                 left = true;
+                repaint();
                 up = false;
                 down = false;
                 right = false;
-            }
 
+            }
+            moves++;
         }
 
     }
@@ -430,33 +434,40 @@ flag2=true;
      */
     public synchronized void vkUp() {
         pressUp = true;
-        if (moves > 0) {
 
-            moves++;
-            if (!down || !left || !right) {
+
+
+            if (!down) {
+
                 up = true;
                 left = false;
                 right = false;
                 down = false;
+
             }
+            moves++;
         }
-    }
+
 
     /**
      * Klawiatura - ruch w dol
      */
     public synchronized void vkDown() {
         pressDown = true;
-        if (moves > 0) {
-            moves++;
+
+
             if (!up) {
+
                 down = true;
+                repaint();
                 up = false;
                 left = false;
                 right = false;
+
             }
+            moves++;
         }
-    }
+
     public Game() {
         setFocusable(false);
         setBackground(new Color(48, 172, 60));
@@ -476,13 +487,13 @@ flag2=true;
 
     /**
      * metoda rysujaca pole gry
-     * @param obj
+     * @param obj rysuje na JPanelu elementy gry
      */
     public void paint(Graphics obj) {
         repaint();
-        countGame = Frame.count;
-        gameMode = Frame.modeFlag;
-        levelFlag = Frame.levelFlag;
+        countGame = Menu.count;
+        gameMode = Menu.modeFlag;
+        levelFlag = Menu.levelFlag;
 
 
         if (moves == 0) {
@@ -495,7 +506,6 @@ flag2=true;
         obj.drawRect(24, 74, 851, 577);
         obj.setColor(Color.black);
         obj.fillRect(25, 75, 850, 650);
-
 
         obj.setColor(Color.blue);
         obj.drawRect(24, 10, 851, 50);
@@ -531,7 +541,7 @@ flag2=true;
         }
 
 
-        appearanceFlag = Frame.apperanceFlag;
+        appearanceFlag = Menu.apperanceFlag;
         //wyglad gry, trzy tryby
         if (appearanceFlag == 1) {
 
@@ -544,33 +554,32 @@ flag2=true;
             for (int i = 0; i < lenghtDefaultSnake; i++) {
 
                 if (i == 0 && right) {
-                    moves++;
+
                     rightHead = new ImageIcon("right.png");
                     headR = rightHead.getImage();
-                    repaint();
 
                     obj.drawImage(headR, snakeLenghtX[i], snakeLenghtY[i], this);
                     repaint();
 
-                }  if (i == 0 && left) {
+                }  else if (i == 0 && left) {
+
                     leftHead = new ImageIcon("left.png");
                     headL = leftHead.getImage();
-                    repaint();
+
                     obj.drawImage(headL, snakeLenghtX[i], snakeLenghtY[i], this);
                     repaint();
 
-                }  if (i == 0 && up) {
+                }  else if (i == 0 && up) {
                     upHead = new ImageIcon("up.png");
                     headU = upHead.getImage();
-                    repaint();
+
                     obj.drawImage(headU, snakeLenghtX[i], snakeLenghtY[i], this);
                     repaint();
 
-                } if (i == 0 && down) {
+                } else if (i == 0 && down) {
                     downHead = new ImageIcon("down.png");
 
                     headD = downHead.getImage();
-                    repaint();
                     obj.drawImage(headD, snakeLenghtX[i], snakeLenghtY[i], this);
                     repaint();
                 }  if (i != 0) {
@@ -615,7 +624,7 @@ flag2=true;
 
                 for (int i = 0; i < lenghtDefaultSnake; i++) {
                     if (i == 0 && right) {
-                        moves++;
+                       // moves++;
                         rightHead = new ImageIcon("right3.png");
                         rightHead.paintIcon(this, obj, snakeLenghtX[i], snakeLenghtY[i]);
                     } else if (i == 0 && left) {
@@ -693,23 +702,23 @@ flag2=true;
         if (right) {
             repaint();
             rightMove();
-
+            repaint();
             }
          else if (left) {
             repaint();
             leftMove();
-
+            repaint();
             }
         else if (up) {
             repaint();
            upMove();
-
+            repaint();
             }
         else if (down) {
             repaint();
 
             downMove();
-
+            repaint();
             }
 
     }
@@ -721,15 +730,15 @@ flag2=true;
      */
   public  void vkSpace() {
         // System.out.println("FLAG STOP" + Frame.flagStop);
-        if (Frame.flagStop == 0) {
+        if (Menu.flagStop == 0) {
             timer.stop();
             if (gameMode == 2) {
-                Frame.timerGame.stop();
+                Menu.timerGame.stop();
             }
         } else {
             timer.restart();
             if (gameMode == 2) {
-                Frame.timerGame.restart();
+                Menu.timerGame.restart();
             }
         }
     }

@@ -10,9 +10,7 @@ import javax.swing.*;
 public class ButtonOption {
     private ImageIcon  option;
 
-    /**
-     * @return bieżacy buttonOption
-     */
+
     public JButton getButtonOption() {
         return buttonOption;
     }

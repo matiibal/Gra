@@ -12,9 +12,7 @@ public class ButtonSaveSettings {
 
     private ImageIcon saveSetting;
 
-    /**
-     * @return bieżacy buttonSaveSettings
-     */
+
     public JButton getButtonSaveSettings() {
         return buttonSaveSettings;
     }

@@ -9,32 +9,20 @@ import java.awt.*;
 
 public class LevelButtons {
 
-    /**
-     * zwraca grupe przycikow
-     * @return groupLevel
-     */
+
     public ButtonGroup getGroupLevel() {
         return groupLevel;
     }
 
-    /**
-     *zwraca przycisk JRadioButton
-     * @return levelEasy
-     */
+
     public JRadioButton getLevelEasy() {
         return levelEasy;
     }
-    /**
-     *zwraca przycisk JRadioButton
-     * @return levelMedium
-     */
+
     public JRadioButton getLevelMedium() {
         return levelMedium;
     }
-    /**
-     *zwraca przycisk JRadioButton
-     * @return levelHard
-     */
+
     public JRadioButton getLevelHard() {
         return levelHard;
     }
@@ -42,32 +30,20 @@ public class LevelButtons {
     private ButtonGroup groupLevel;
     private ButtonGroup groupMode;
 
-    /**
-     *zwraca grupe przyciskow wygladu weza
-     * @return groupAppearance
-     */
+
     public ButtonGroup getGroupAppearance() {
         return groupAppearance;
     }
 
-    /**
-     *zwraca przycisk JRadioButton
-     * @return look1
-     */
+
     public JRadioButton getLook1() {
         return look1;
     }
-    /**
-     *zwraca przycisk JRadioButton
-     * @return look2
-     */
+
     public JRadioButton getLook2() {
         return look2;
     }
-    /**
-     *zwraca przycisk JRadioButton
-     * @return look3
-     */
+
     public JRadioButton getLook3() {
         return look3;
     }
@@ -77,24 +53,15 @@ public class LevelButtons {
     private JRadioButton levelMedium;
     private JRadioButton levelHard, look1,look2,look3;
 
-    /**
-     *zwraca grupe przyciskow trybu gry
-     * @return groupMode
-     */
+
     public ButtonGroup getGroupMode() {
         return groupMode;
     }
-    /**
-     *zwraca przycisk JRadioButton
-     * @return freeMode
-     */
+
     public JRadioButton getFreeMode() {
         return freeMode;
     }
-    /**
-     *zwraca przycisk JRadioButton
-     * @return timeMode
-     */
+
     public JRadioButton getTimeMode() {
         return timeMode;
     }

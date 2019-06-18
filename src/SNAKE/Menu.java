@@ -12,11 +12,10 @@ import java.util.Set;
 
 
 /**
- * @author Mateusz Bałazy
  * Okno menu głownego
  */
 
-public class Frame extends JFrame implements ActionListener {
+public class Menu extends JFrame implements ActionListener {
     private JLabel background;
     private ArrayList<Integer> settingFile;
     private ArrayList<Integer> saveFile;
@@ -42,11 +41,14 @@ public class Frame extends JFrame implements ActionListener {
     private ArrayList<Integer> bufor = new ArrayList<>();
     private boolean flagaZmiany = true;
     private final Set<Character> pressed = new HashSet<Character>();
+    private boolean flagRight = false, flagLeft = false, flagUp = false, flagDown = false;
+    private boolean moge = true;
 
 
     /**
      * stworzenie pliku do zapisu
-     * @throws FileNotFoundException
+     *
+     * @throws FileNotFoundException rzuć wyjątek gdy plik nie istnieje
      */
     public static void createFile() throws FileNotFoundException {  //tworzenie pliku
         PrintWriter settings = new PrintWriter("setting.txt");
@@ -82,19 +84,15 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     /**
-     * zapis do pliku utawień
+     * zapis do pliku ustawień gry
      */
     public void saveSetting() {
         try {
             //zapisanie danych
             FileWriter saveSettings = new FileWriter("setting.txt");
-
             saveSettings.append(String.valueOf(levelFlag)).append("\r\n");
             saveSettings.append(String.valueOf(modeFlag)).append("\r\n");
             saveSettings.append(String.valueOf(apperanceFlag)).append("\r\n");
-            //  System.lineSeparator();
-
-
             saveSettings.close();
         } catch (IOException ex) {
             System.out.println("File errror");
@@ -110,7 +108,8 @@ public class Frame extends JFrame implements ActionListener {
 
     /**
      * dzialanie timersa
-     * @param countPassed
+     *
+     * @param countPassed czas poczatkowy rozgrywki w trybie czasowym
      */
     public static void startTimer(int countPassed) {
         ActionListener action = e -> {
@@ -130,89 +129,83 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
-    public Frame() {     //konstruktor
+    public Menu() {     //konstruktor
         game = new Game();
         timerKey = new Timer(10, this);
 
 
+        class Key extends Thread {
+            int licznik = 0;
+
+            public Key() {
+                addKeyListener(new KeyListener() {
+                    @Override
+
+                    public void keyTyped(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        int keyCode = e.getKeyCode();
 
 
-        addKeyListener(new KeyListener() {
-            @Override
+                        switch (keyCode) {
 
-            public void keyTyped(KeyEvent e) {
+                            case KeyEvent.VK_RIGHT: {
+                                {
+                                    licznik++;
+                                    if (licznik == 1) {
+                                        game.vkRight();
+                                    }
+                                }
+                                break;
+                            }
+                            case KeyEvent.VK_LEFT: {
+                                {
+                                    licznik++;
+                                    if (licznik == 1) {
+                                        game.vkLeft();
+                                    }
+                                    break;
+                                }
+                            }
+                            case KeyEvent.VK_DOWN: {
+                                licznik++;
+                                if (licznik == 1) {
+                                    game.vkDown();
+                                }
+                                break;
+                            }
+                            case KeyEvent.VK_UP: {
+                                licznik++;
+                                if (licznik == 1) {
+                                    game.vkUp();
+                                }
+                                break;
+                            }
+
+                        }
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                        int keyCode = e.getKeyCode();
+
+
+                        if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_DOWN) {
+                            licznik = 0;
+                        }
+
+
+                    }
+
+                });
 
             }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-
-                if (keyCode == KeyEvent.VK_RIGHT) {
-
-                    game.vkRight();
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-                }
-
-
-                if (keyCode == KeyEvent.VK_LEFT) {
-
-                    game.vkLeft();
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-                }
-
-                if (keyCode == KeyEvent.VK_DOWN) {
-                    game.vkDown();
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-                }
-
-                if (keyCode == KeyEvent.VK_UP) {
-
-                    game.vkUp();
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                int keyCode = e.getKeyCode();
-
-
-            }
-
-
-
-        });
-
-
-
-
-
+        }
+        Key key = new Key();
         addKeyListener(new KeyAdapter() {   //obsługa klawiszy
             @Override
             public void keyTyped(KeyEvent e) {
